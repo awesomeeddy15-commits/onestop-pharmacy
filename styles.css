@@ -293,7 +293,7 @@ body.main-app.light-theme .modal-box { background: #F3EBF7; }
 /* =========================================================
    MOBILE HEADER: Slide-Down Search Panel & Layout
    ========================================================= */
-.mobile-only { display: none; }
+.mobile-only { display: none !important; }
 
 .mobile-search-panel { 
   position: absolute; top: 100%; left: 0; width: 100%; padding: 1rem 1.2rem; 
@@ -302,7 +302,7 @@ body.main-app.light-theme .modal-box { background: #F3EBF7; }
   border-bottom: 1px solid rgba(216, 180, 226, 0.2);
   transform: translateY(-100%); opacity: 0; pointer-events: none;
   transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  z-index: -1; /* Sits behind the header until toggled */
+  z-index: -1; 
   box-sizing: border-box;
 }
 .site-header { position: relative; z-index: 1000; }
@@ -315,8 +315,7 @@ body.main-app.light-theme .mobile-search-panel { background: rgba(247, 243, 250,
   /* Restore 1-Row Layout */
   .site-header { padding: 0.8rem 1rem !important; flex-wrap: nowrap !important; height: auto !important; }
   
-  /* Big Logo (48px is the perfect mobile sweet spot) */
-  .brand-logo { height: 48px !important; margin-right: auto; }
+  .brand-logo { height: 44px !important; margin-right: auto; }
   
   /* Hide Desktop Search completely */
   .header-search-wrap { display: none !important; }
@@ -325,7 +324,7 @@ body.main-app.light-theme .mobile-search-panel { background: rgba(247, 243, 250,
   .mobile-only { display: flex !important; }
   
   /* Compact Button Row */
-  .nav-actions { gap: 0.4rem; }
+  .nav-actions { gap: 0.4rem; display: flex; align-items: center; }
   .cart-widget, .btn-icon-toggle { width: 38px; height: 38px; margin: 0; }
   
   /* Restore original 3D stack spacing */
