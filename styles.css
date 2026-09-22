@@ -196,7 +196,11 @@ body.main-app.light-theme .cart-widget svg { stroke: #1D0A35; }
    CART DRAWER
    ========================================================= */
 .cart-drawer {
-  position: fixed; top: 0; right: -100%; width: 100%; max-width: 400px; height: 100vh;
+  position: fixed; top: 0; right: -100%; width: 100%; max-width: 400px; 
+  /* THE FIX: Fallback to 100%, but use 100dvh for mobile address bars */
+  height: 100%; 
+  height: 100dvh; 
+  box-sizing: border-box; 
   background: rgba(17, 5, 31, 0.85);
   -webkit-backdrop-filter: blur(25px) saturate(200%);
   backdrop-filter: blur(25px) saturate(200%);
@@ -239,15 +243,38 @@ body.main-app.light-theme .cart-drawer-footer { background: rgba(255, 255, 255, 
 body.main-app.light-theme .modal-box { background: #F3EBF7; }
 
 /* =========================================================
-   MOBILE HEADER FIX (Prevents Cart Drop-off)
+   MOBILE HEADER FIX (Restores Logo & Collapses Search)
    ========================================================= */
 @media (max-width: 600px) {
-  .site-header { padding: 0 0.6rem; gap: 0.4rem; }
-  .brand-logo { height: 26px; }
-  .header-search-wrap { margin: 0; min-width: 100px; }
-  .header-search-box { padding: 0.2rem 0.2rem 0.2rem 0.5rem; }
-  .cart-widget { width: 34px; height: 34px; margin-right: 0.25rem; }
-  .cart-widget svg { width: 15px; height: 15px; }
-  .btn-icon-toggle { width: 34px; height: 34px; }
-  .btn-icon-toggle .bar { width: 14px; }
+  .site-header { padding: 0 1rem; justify-content: space-between; }
+  
+  /* Restore Logo Size */
+  .brand-logo { height: 32px !important; }
+  
+  /* Shrink Search to just the magnifying glass icon */
+  .header-search-wrap { 
+    min-width: 38px !important; 
+    width: 38px !important; 
+    height: 38px !important; 
+    border-radius: 50% !important; 
+    padding: 0 !important; 
+    margin: 0 auto 0 1rem !important; 
+    display: flex !important; 
+    align-items: center; 
+    justify-content: center; 
+    background: rgba(216, 180, 226, 0.1);
+  }
+  
+  /* Hide the text box and the 'SEARCH' button entirely on phones */
+  .header-search-wrap input, 
+  .header-search-wrap button { 
+    display: none !important; 
+  }
+  
+  /* Ensure the magnifying glass SVG is centered and visible */
+  .header-search-wrap svg { margin: 0 !important; width: 18px; height: 18px; }
+
+  /* Slightly increase cart and menu button size for better tapping */
+  .cart-widget { width: 38px; height: 38px; margin-right: 0.5rem; }
+  .btn-icon-toggle { width: 38px; height: 38px; }
 }
