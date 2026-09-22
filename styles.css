@@ -311,6 +311,40 @@ body.main-app.light-theme .modal-box { background: #F3EBF7; }
 /* Light Theme overrides for the panel */
 body.main-app.light-theme .mobile-search-panel { background: rgba(247, 243, 250, 0.95); border-bottom-color: rgba(29, 10, 53, 0.15); }
 
+/* =========================================================
+   DESKTOP FIXES: Deck Alignment & Search Button Styling
+   ========================================================= */
+/* 1. Pull the 3D stack back up on Desktop */
+.deck {
+  top: 80px !important;
+  height: calc(100% - 80px) !important;
+}
+
+/* 2. Style the raw SEARCH button into a premium pill */
+.header-search-box button {
+  background: #1D0A35;
+  color: #FFFFFF;
+  border: none;
+  padding: 0.45rem 1.2rem;
+  border-radius: 9999px;
+  font-weight: 700;
+  font-size: 0.7rem;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  margin-left: 0.5rem;
+  transition: all 0.3s ease;
+}
+
+.header-search-box button:hover {
+  opacity: 0.8;
+}
+
+/* Light Theme override for the search button */
+body.main-app.light-theme .header-search-box button {
+  background: #D8B4E2;
+  color: #1D0A35;
+}
+
 @media (max-width: 600px) {
   /* Restore 1-Row Layout */
   .site-header { padding: 0.8rem 1rem !important; flex-wrap: nowrap !important; height: auto !important; }
