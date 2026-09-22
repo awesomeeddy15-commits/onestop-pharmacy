@@ -243,38 +243,36 @@ body.main-app.light-theme .cart-drawer-footer { background: rgba(255, 255, 255, 
 body.main-app.light-theme .modal-box { background: #F3EBF7; }
 
 /* =========================================================
-   MOBILE HEADER FIX (Restores Logo & Collapses Search)
+   MOBILE HEADER FIX (2-Row Layout with Working Search)
    ========================================================= */
 @media (max-width: 600px) {
-  .site-header { padding: 0 1rem; justify-content: space-between; }
-  
-  /* Restore Logo Size */
-  .brand-logo { height: 32px !important; }
-  
-  /* Shrink Search to just the magnifying glass icon */
-  .header-search-wrap { 
-    min-width: 38px !important; 
-    width: 38px !important; 
-    height: 38px !important; 
-    border-radius: 50% !important; 
-    padding: 0 !important; 
-    margin: 0 auto 0 1rem !important; 
-    display: flex !important; 
-    align-items: center; 
-    justify-content: center; 
-    background: rgba(216, 180, 226, 0.1);
+  /* Allow header to wrap into two rows */
+  .site-header { 
+    padding: 1rem 1rem 0.8rem 1rem !important; 
+    flex-wrap: wrap !important; 
+    height: auto !important; 
   }
   
-  /* Hide the text box and the 'SEARCH' button entirely on phones */
+  /* Row 1: Logo left, Actions right */
+  .brand-logo { height: 28px !important; margin-right: auto; }
+  .nav-actions { margin-left: auto; display: flex; align-items: center; }
+  
+  /* Row 2: Full-width search bar */
+  .header-search-wrap { 
+    order: 3 !important; 
+    flex: 1 1 100% !important; 
+    max-width: 100% !important;
+    margin: 1rem 0 0 0 !important; 
+    display: flex !important;
+  }
+  
+  /* Restore the text box and button so search actually works */
   .header-search-wrap input, 
   .header-search-wrap button { 
-    display: none !important; 
+    display: block !important; 
   }
-  
-  /* Ensure the magnifying glass SVG is centered and visible */
-  .header-search-wrap svg { margin: 0 !important; width: 18px; height: 18px; }
 
-  /* Slightly increase cart and menu button size for better tapping */
+  /* Cart and Menu button sizing */
   .cart-widget { width: 38px; height: 38px; margin-right: 0.5rem; }
   .btn-icon-toggle { width: 38px; height: 38px; }
 }
