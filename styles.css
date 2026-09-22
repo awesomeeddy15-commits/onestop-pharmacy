@@ -243,36 +243,50 @@ body.main-app.light-theme .cart-drawer-footer { background: rgba(255, 255, 255, 
 body.main-app.light-theme .modal-box { background: #F3EBF7; }
 
 /* =========================================================
-   MOBILE HEADER FIX (2-Row Layout with Working Search)
+   MOBILE HEADER FIX (Full-Width Search & Prominent Logo)
    ========================================================= */
 @media (max-width: 600px) {
-  /* Allow header to wrap into two rows */
   .site-header { 
-    padding: 1rem 1rem 0.8rem 1rem !important; 
+    padding: 1rem 1.2rem 1rem 1.2rem !important; 
     flex-wrap: wrap !important; 
     height: auto !important; 
   }
   
-  /* Row 1: Logo left, Actions right */
-  .brand-logo { height: 28px !important; margin-right: auto; }
-  .nav-actions { margin-left: auto; display: flex; align-items: center; }
-  
-  /* Row 2: Full-width search bar */
-  .header-search-wrap { 
-    order: 3 !important; 
-    flex: 1 1 100% !important; 
-    max-width: 100% !important;
-    margin: 1rem 0 0 0 !important; 
-    display: flex !important;
+  /* Row 1: Make logo significantly larger to balance the buttons */
+  .brand-logo { 
+    height: 42px !important; 
+    margin-right: auto; 
   }
   
-  /* Restore the text box and button so search actually works */
+  .nav-actions { 
+    margin-left: auto; 
+    display: flex; 
+    align-items: center; 
+  }
+  
+  /* Row 2: Force the search pill to stretch edge-to-edge */
+  .header-search-wrap { 
+    order: 3 !important; 
+    width: 100% !important; 
+    max-width: 100% !important;
+    flex: 0 0 100% !important;
+    margin: 1.2rem 0 0.2rem 0 !important; 
+    display: flex !important;
+    box-sizing: border-box !important;
+  }
+  
+  /* Ensure the text box stretches to fill the extra space inside the pill */
+  .header-search-box {
+    flex: 1 !important;
+    width: 100% !important;
+  }
+  
   .header-search-wrap input, 
   .header-search-wrap button { 
     display: block !important; 
   }
 
-  /* Cart and Menu button sizing */
-  .cart-widget { width: 38px; height: 38px; margin-right: 0.5rem; }
-  .btn-icon-toggle { width: 38px; height: 38px; }
+  /* Match button sizes to the new larger logo */
+  .cart-widget { width: 42px; height: 42px; margin-right: 0.5rem; }
+  .btn-icon-toggle { width: 42px; height: 42px; }
 }
