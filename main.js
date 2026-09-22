@@ -267,3 +267,31 @@ document.addEventListener('DOMContentLoaded', () => {
     closeCheckoutModal.addEventListener('click', () => checkoutModal.classList.remove('show'));
   }
 });
+// --- MOBILE SEARCH PANEL LOGIC ---
+document.addEventListener('DOMContentLoaded', () => {
+  const mobileSearchToggle = document.getElementById('mobile-search-toggle');
+  const mobileSearchPanel = document.getElementById('mobile-search-panel');
+  const mobileSearchInput = document.getElementById('mobileSearchInput');
+
+  if (mobileSearchToggle && mobileSearchPanel) {
+    mobileSearchToggle.addEventListener('click', () => {
+      mobileSearchPanel.classList.toggle('is-open');
+      if (mobileSearchPanel.classList.contains('is-open')) {
+        mobileSearchInput.focus();
+      }
+    });
+  }
+
+  // Hook up the mobile input to filter the iframes
+  if (mobileSearchInput) {
+    mobileSearchInput.addEventListener('input', (e) => {
+      const query = e.target.value.toLowerCase();
+      const iframes = document.querySelectorAll('.deck-page iframe');
+      iframes.forEach(iframe => {
+        if (iframe.contentWindow) {
+          iframe.contentWindow.postMessage({ type: 'SEARCH', query: query }, '*');
+        }
+      });
+    });
+  }
+});

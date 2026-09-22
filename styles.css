@@ -289,58 +289,45 @@ body.main-app.light-theme .modal-box { background: #F3EBF7; }
   /* Match button sizes to the new larger logo */
   .cart-widget { width: 42px; height: 42px; margin-right: 0.5rem; }
   .btn-icon-toggle { width: 42px; height: 42px; }
-}/* =========================================================
-   MOBILE HEADER FIX (Overlap Fix, Huge Logo, Full Search)
+}
+/* =========================================================
+   MOBILE HEADER: Slide-Down Search Panel & Layout
    ========================================================= */
+.mobile-only { display: none; }
+
+.mobile-search-panel { 
+  position: absolute; top: 100%; left: 0; width: 100%; padding: 1rem 1.2rem; 
+  background: rgba(17, 5, 31, 0.95); 
+  -webkit-backdrop-filter: blur(25px); backdrop-filter: blur(25px); 
+  border-bottom: 1px solid rgba(216, 180, 226, 0.2);
+  transform: translateY(-100%); opacity: 0; pointer-events: none;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: -1; /* Sits behind the header until toggled */
+  box-sizing: border-box;
+}
+.site-header { position: relative; z-index: 1000; }
+.mobile-search-panel.is-open { transform: translateY(0); opacity: 1; pointer-events: auto; }
+
+/* Light Theme overrides for the panel */
+body.main-app.light-theme .mobile-search-panel { background: rgba(247, 243, 250, 0.95); border-bottom-color: rgba(29, 10, 53, 0.15); }
+
 @media (max-width: 600px) {
-  .site-header { 
-    padding: 1rem 1.2rem 1.2rem 1.2rem !important; 
-    flex-wrap: wrap !important; 
-    height: auto !important; 
-  }
+  /* Restore 1-Row Layout */
+  .site-header { padding: 0.8rem 1rem !important; flex-wrap: nowrap !important; height: auto !important; }
   
-  /* Row 1: Drastically increased logo size */
-  .brand-logo { 
-    height: 56px !important; 
-    margin-right: auto; 
-  }
+  /* Big Logo (48px is the perfect mobile sweet spot) */
+  .brand-logo { height: 48px !important; margin-right: auto; }
   
-  .nav-actions { 
-    margin-left: auto; 
-    display: flex; 
-    align-items: center; 
-  }
+  /* Hide Desktop Search completely */
+  .header-search-wrap { display: none !important; }
   
-  /* Row 2: Full-width search pill */
-  .header-search-wrap { 
-    order: 3 !important; 
-    width: 100% !important; 
-    max-width: 100% !important;
-    flex: 0 0 100% !important;
-    margin: 1.2rem 0 0 !important; 
-    display: flex !important;
-    box-sizing: border-box !important;
-  }
+  /* Show Mobile Search Toggle */
+  .mobile-only { display: flex !important; }
   
-  .header-search-box {
-    flex: 1 !important;
-    width: 100% !important;
-  }
+  /* Compact Button Row */
+  .nav-actions { gap: 0.4rem; }
+  .cart-widget, .btn-icon-toggle { width: 38px; height: 38px; margin: 0; }
   
-  .header-search-wrap input, 
-  .header-search-wrap button { 
-    display: block !important; 
-  }
-
-  .cart-widget, .btn-icon-toggle { 
-    width: 42px; 
-    height: 42px; 
-  }
-  .cart-widget { margin-right: 0.5rem; }
-
-  /* THE OVERLAP FIX: Push the 3D stack down to clear the taller header */
-  .deck {
-    top: 170px !important; 
-    height: calc(100% - 170px) !important;
-  }
+  /* Restore original 3D stack spacing */
+  .deck { top: 90px !important; height: calc(100% - 90px) !important; }
 }
