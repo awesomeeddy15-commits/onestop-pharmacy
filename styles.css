@@ -289,4 +289,58 @@ body.main-app.light-theme .modal-box { background: #F3EBF7; }
   /* Match button sizes to the new larger logo */
   .cart-widget { width: 42px; height: 42px; margin-right: 0.5rem; }
   .btn-icon-toggle { width: 42px; height: 42px; }
+}/* =========================================================
+   MOBILE HEADER FIX (Overlap Fix, Huge Logo, Full Search)
+   ========================================================= */
+@media (max-width: 600px) {
+  .site-header { 
+    padding: 1rem 1.2rem 1.2rem 1.2rem !important; 
+    flex-wrap: wrap !important; 
+    height: auto !important; 
+  }
+  
+  /* Row 1: Drastically increased logo size */
+  .brand-logo { 
+    height: 56px !important; 
+    margin-right: auto; 
+  }
+  
+  .nav-actions { 
+    margin-left: auto; 
+    display: flex; 
+    align-items: center; 
+  }
+  
+  /* Row 2: Full-width search pill */
+  .header-search-wrap { 
+    order: 3 !important; 
+    width: 100% !important; 
+    max-width: 100% !important;
+    flex: 0 0 100% !important;
+    margin: 1.2rem 0 0 !important; 
+    display: flex !important;
+    box-sizing: border-box !important;
+  }
+  
+  .header-search-box {
+    flex: 1 !important;
+    width: 100% !important;
+  }
+  
+  .header-search-wrap input, 
+  .header-search-wrap button { 
+    display: block !important; 
+  }
+
+  .cart-widget, .btn-icon-toggle { 
+    width: 42px; 
+    height: 42px; 
+  }
+  .cart-widget { margin-right: 0.5rem; }
+
+  /* THE OVERLAP FIX: Push the 3D stack down to clear the taller header */
+  .deck {
+    top: 170px !important; 
+    height: calc(100% - 170px) !important;
+  }
 }
