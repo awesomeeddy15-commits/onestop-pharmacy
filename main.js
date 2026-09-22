@@ -149,3 +149,78 @@ function handleHeaderSearch(e) {
     }
   }, 100);
 }
+// --- CART CONTROLLER (Local Storage & Drawer) ---
+document.addEventListener('DOMContentLoaded', () => {
+  let cart = JSON.parse(localStorage.getItem('onestop_cart')) || [];
+  const cartBadge = document.getElementById('cart-badge');
+  const cartWidget = document.getElementById('cart-widget');
+  const cartDrawer = document.getElementById('cart-drawer');
+  const closeCartBtn = document.getElementById('close-cart-btn');
+  const cartItemsContainer = document.getElementById('cart-items-container');
+  const cartTotalPrice = document.getElementById('cart-total-price');
+
+  function renderCart() {
+    if (!cartItemsContainer) return;
+    
+    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+    const totalValue = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    
+    // Update Badge
+    if (totalItems > 0) {
+      cartBadge.textContent = totalItems;
+      cartBadge.style.display = 'flex';
+    } else {
+      cartBadge.style.display = 'none';
+    }
+
+    // Update Drawer Content
+    cartItemsContainer.innerHTML = '';
+    if (cart.length === 0) {
+      cartItemsContainer.innerHTML = '<p style="text-align: center; margin-top: 2rem; opacity: 0.6; font-size: 0.85rem;">Your bag is currently empty.</p>';
+    } else {
+      cart.forEach(item => {
+        const row = document.createElement('div');
+        row.className = 'cart-item-row';
+        row.innerHTML = `
+          <div class="cart-item-info">
+            <h5>${item.name}</h5>
+            <p>$${item.price.toFixed(2)}</p>
+          </div>
+          <div style="font-weight: 800; font-family: monospace; font-size: 0.9rem;">
+            x${item.quantity}
+          </div>
+        `;
+        cartItemsContainer.appendChild(row);
+      });
+    }
+    
+    if (cartTotalPrice) cartTotalPrice.textContent = `$${totalValue.toFixed(2)}`;
+  }
+
+  // Initialize
+  renderCart();
+
+  // Listen for ADD_TO_CART messages
+  window.addEventListener('message', (e) => {
+    if (e.data && e.data.type === 'ADD_TO_CART') {
+      const incomingItem = e.data.item;
+      const existingItem = cart.find(i => i.id === incomingItem.id);
+      
+      if (existingItem) existingItem.quantity += 1;
+      else cart.push({ ...incomingItem, quantity: 1 });
+      
+      localStorage.setItem('onestop_cart', JSON.stringify(cart));
+      
+      cartBadge.classList.add('pop');
+      setTimeout(() => cartBadge.classList.remove('pop'), 200);
+      
+      renderCart();
+      // Optional: Auto-open drawer when adding item
+      // cartDrawer.classList.add('is-open');
+    }
+  });
+
+  // Open & Close Drawer
+  if (cartWidget) cartWidget.addEventListener('click', () => cartDrawer.classList.add('is-open'));
+  if (closeCartBtn) closeCartBtn.addEventListener('click', () => cartDrawer.classList.remove('is-open'));
+});

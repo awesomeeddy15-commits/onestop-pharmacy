@@ -178,3 +178,50 @@ body.light-theme .page-card[data-page="dispensary"] { background-color: #1D0A35 
 body.light-theme .page-card[data-page="dispensary"] .card-tab-header { border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important; }
 body.light-theme .page-card[data-page="dispensary"] .tab-index { color: #D8B4E2 !important; }
 body.light-theme .page-card[data-page="dispensary"] .tab-title { color: rgba(255, 255, 255, 0.65) !important; }
+/* =========================================================
+   CART WIDGET STYLING
+   ========================================================= */
+.cart-widget { position: relative; display: flex; align-items: center; justify-content: center; width: 42px; height: 42px; border-radius: 50%; background: rgba(216, 180, 226, 0.1); border: 1px solid rgba(216, 180, 226, 0.3); margin-right: 0.75rem; cursor: pointer; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
+.cart-widget:hover { background: var(--color-lilac); border-color: var(--color-lilac); box-shadow: 0 0 14px rgba(216, 180, 226, 0.25); }
+.cart-widget svg { width: 18px; height: 18px; stroke: var(--color-white); transition: stroke 0.4s ease; }
+.cart-widget:hover svg { stroke: var(--color-purple); }
+
+.cart-badge { position: absolute; top: -4px; right: -4px; background: #EF4444; color: #FFF; font-size: 0.65rem; font-weight: 800; font-family: monospace; width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 5px rgba(0,0,0,0.2); transition: transform 0.2s ease; }
+.cart-badge.pop { transform: scale(1.3); }
+
+/* Light Theme overrides for cart */
+body.main-app.light-theme .cart-widget { background: rgba(29, 10, 53, 0.06); border-color: rgba(29, 10, 53, 0.2); }
+body.main-app.light-theme .cart-widget svg { stroke: #1D0A35; }
+/* =========================================================
+   CART DRAWER
+   ========================================================= */
+.cart-drawer {
+  position: fixed; top: 0; right: -100%; width: 100%; max-width: 400px; height: 100vh;
+  background: rgba(17, 5, 31, 0.85);
+  -webkit-backdrop-filter: blur(25px) saturate(200%);
+  backdrop-filter: blur(25px) saturate(200%);
+  z-index: 99999; display: flex; flex-direction: column;
+  border-left: 1px solid rgba(216, 180, 226, 0.2);
+  box-shadow: -10px 0 40px rgba(0, 0, 0, 0.5);
+  transition: right 0.5s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.4s ease;
+}
+.cart-drawer.is-open { right: 0; }
+
+.cart-drawer-header { padding: 1.5rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(216, 180, 226, 0.15); }
+.close-cart-btn { background: none; border: none; color: var(--color-white); font-size: 2rem; line-height: 1; cursor: pointer; transition: color 0.2s ease; }
+.close-cart-btn:hover { color: var(--color-lilac); }
+
+.cart-items-container { flex: 1; overflow-y: auto; padding: 1.5rem; display: flex; flex-direction: column; gap: 1rem; }
+.cart-item-row { display: flex; justify-content: space-between; align-items: center; background: rgba(255, 255, 255, 0.05); padding: 1rem; border-radius: 12px; border: 1px solid rgba(216, 180, 226, 0.1); }
+.cart-item-info h5 { font-size: 0.85rem; font-weight: 700; margin-bottom: 0.2rem; }
+.cart-item-info p { font-size: 0.75rem; color: rgba(255, 255, 255, 0.6); }
+
+.cart-drawer-footer { padding: 1.5rem; border-top: 1px solid rgba(216, 180, 226, 0.15); background: rgba(0, 0, 0, 0.2); }
+.cart-total-row { display: flex; justify-content: space-between; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 0.05em; }
+
+/* Light Theme overrides */
+body.main-app.light-theme .cart-drawer { background: rgba(247, 243, 250, 0.85); border-left-color: rgba(29, 10, 53, 0.15); box-shadow: -10px 0 40px rgba(29, 10, 53, 0.1); }
+body.main-app.light-theme .close-cart-btn { color: var(--color-purple); }
+body.main-app.light-theme .cart-item-row { background: #FFFFFF; border-color: rgba(29, 10, 53, 0.1); }
+body.main-app.light-theme .cart-item-info p { color: rgba(29, 10, 53, 0.6); }
+body.main-app.light-theme .cart-drawer-footer { background: rgba(255, 255, 255, 0.5); border-top-color: rgba(29, 10, 53, 0.15); }
