@@ -34,7 +34,7 @@
       </div>
       <div class="price-row">
         <span style="font-weight: 800; font-size: 1rem; color: #1D0A35;">$24.00</span>
-        <button onclick="addToBag(this, 'Hydrating Barrier Cream', 24.00)" style="background: #1D0A35; color: #FFF; padding: 0.45rem 1.1rem; border: none; cursor: pointer; border-radius: 9999px; font-weight: 700; font-size: 0.7rem; text-transform: uppercase;">Add to Bag</button>
+        <button onclick="addToBag(this)" style="background: #1D0A35; color: #FFF; padding: 0.45rem 1.1rem; border: none; cursor: pointer; border-radius: 9999px; font-weight: 700; font-size: 0.7rem; text-transform: uppercase;">Add to Bag</button>
       </div>
     </div>
 
@@ -46,7 +46,7 @@
       </div>
       <div class="price-row">
         <span style="font-weight: 800; font-size: 1rem; color: #1D0A35;">$18.00</span>
-        <button onclick="addToBag(this, 'Daily Vitamin C & Zinc', 18.00)" style="background: #1D0A35; color: #FFF; padding: 0.45rem 1.1rem; border: none; cursor: pointer; border-radius: 9999px; font-weight: 700; font-size: 0.7rem; text-transform: uppercase;">Add to Bag</button>
+        <button onclick="addToBag(this)" style="background: #1D0A35; color: #FFF; padding: 0.45rem 1.1rem; border: none; cursor: pointer; border-radius: 9999px; font-weight: 700; font-size: 0.7rem; text-transform: uppercase;">Add to Bag</button>
       </div>
     </div>
 
@@ -58,7 +58,7 @@
       </div>
       <div class="price-row">
         <span style="font-weight: 800; font-size: 1rem; color: #1D0A35;">$22.00</span>
-        <button onclick="addToBag(this, 'Night Sleep Support', 22.00)" style="background: #1D0A35; color: #FFF; padding: 0.45rem 1.1rem; border: none; cursor: pointer; border-radius: 9999px; font-weight: 700; font-size: 0.7rem; text-transform: uppercase;">Add to Bag</button>
+        <button onclick="addToBag(this)" style="background: #1D0A35; color: #FFF; padding: 0.45rem 1.1rem; border: none; cursor: pointer; border-radius: 9999px; font-weight: 700; font-size: 0.7rem; text-transform: uppercase;">Add to Bag</button>
       </div>
     </div>
   </div>
@@ -70,13 +70,11 @@
 
   <script>
     function addToBag(btn) {
-      // 1. Automatically find the product details from the HTML card
       const itemContainer = btn.closest('.item');
       const itemName = itemContainer.querySelector('h4').textContent.trim();
       const priceText = itemContainer.querySelector('.price-row span').textContent;
       const itemPrice = parseFloat(priceText.replace('$', ''));
 
-      // 2. Visual feedback
       btn.textContent = 'Added ✓';
       btn.style.background = '#22C55E';
       btn.style.color = '#FFFFFF';
@@ -86,7 +84,6 @@
         btn.style.color = document.body.classList.contains('light-theme') ? '#1D0A35' : '#FFFFFF';
       }, 1500);
 
-      // 3. Safely send the data up to the parent window's cart
       if (window.parent) {
         window.parent.postMessage({
           type: 'ADD_TO_CART',
@@ -99,7 +96,6 @@
       }
     }
 
-    // Theme & Search Sync Logic
     window.addEventListener('message', (e) => {
       if (!e.data) return;
       if (e.data.type === 'SEARCH') {
@@ -117,6 +113,10 @@
           document.body.classList.remove('light-theme');
           document.documentElement.classList.remove('light-theme');
         }
+      } else if (e.data.type === 'WAKE_UP') {
+        window.dispatchEvent(new Event('resize'));
+        document.body.style.transform = 'translateZ(0)';
+        setTimeout(() => document.body.style.transform = 'none', 50);
       }
     });
 

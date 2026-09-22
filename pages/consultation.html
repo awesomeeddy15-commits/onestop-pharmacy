@@ -17,8 +17,6 @@
     /* Light Theme override */
     body.light-theme, html.light-theme { background: #F3EBF7 !important; background-color: #F3EBF7 !important; }
 
-    .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(17, 5, 31, 0.65); backdrop-filter: blur(6px); align-items: center; justify-content: center; z-index: 999; padding: 1rem; }
-    .modal-box { background: #FFFFFF; padding: 1.8rem; border-radius: 20px; max-width: 400px; width: 100%; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25); }
     .slot-pill { padding: 0.45rem 0.9rem; border: 1.5px solid #1D0A35; border-radius: 9999px; font-size: 0.78rem; font-weight: 700; cursor: pointer; background: transparent; color: #1D0A35; }
     .slot-pill.active { background: #1D0A35; color: #FFF; }
     @media (max-width: 600px) { body { padding: 1.5rem 1.2rem 3rem 1.2rem; } }
@@ -47,7 +45,7 @@
     <div class="modal-box" style="text-align: center;">
       <h3 style="font-size: 1.2rem; font-weight: 800; color: #1D0A35; font-family: 'Montserrat', sans-serif;">OneStop Pharmacy Desk</h3>
       <p style="font-size: 0.85rem; color: #666; margin: 0.5rem 0 1.2rem;">Direct phone line to our duty pharmacist.</p>
-      <a href="tel:+2348006637867" style="display: block; width: 100%; text-decoration: none; background: #1D0A35; color: #FFF; padding: 0.85rem; border-radius: 9999px; font-weight: 700; font-size: 0.85rem; text-transform: uppercase;">Dial +234 701 5234</a>
+      <a href="tel:+2348006637867" style="display: block; width: 100%; text-decoration: none; background: #1D0A35; color: #FFF; padding: 0.85rem; border-radius: 9999px; font-weight: 700; font-size: 0.85rem; text-transform: uppercase;">Dial +234 800 ONESTOP</a>
       <button id="closeCallBtn" style="background: none; border: none; font-size: 0.75rem; color: #888; cursor: pointer; text-transform: uppercase; font-weight: 700; margin-top: 1rem;">Close</button>
     </div>
   </div>
@@ -71,10 +69,11 @@
   </div>
 
   <script>
-    document.getElementById('callBtn').addEventListener('click', () => { document.getElementById('callModal').style.display = 'flex'; });
-    document.getElementById('bookBtn').addEventListener('click', () => { document.getElementById('bookModal').style.display = 'flex'; });
-    document.getElementById('closeCallBtn').addEventListener('click', () => { document.getElementById('callModal').style.display = 'none'; });
-    document.getElementById('closeBookBtn').addEventListener('click', () => { document.getElementById('bookModal').style.display = 'none'; });
+    // Updated to use .show instead of display=flex
+    document.getElementById('callBtn').addEventListener('click', () => { document.getElementById('callModal').classList.add('show'); });
+    document.getElementById('bookBtn').addEventListener('click', () => { document.getElementById('bookModal').classList.add('show'); });
+    document.getElementById('closeCallBtn').addEventListener('click', () => { document.getElementById('callModal').classList.remove('show'); });
+    document.getElementById('closeBookBtn').addEventListener('click', () => { document.getElementById('bookModal').classList.remove('show'); });
 
     function pickSlot(el) {
       document.querySelectorAll('.slot-pill').forEach(b => b.classList.remove('active'));
@@ -86,13 +85,14 @@
       const name = nameInput.value.trim();
       if (!name) return alert('Please enter your name.');
       alert(`Thank you, ${name}! Your consultation has been scheduled.`);
-      document.getElementById('bookModal').style.display = 'none';
+      document.getElementById('bookModal').classList.remove('show');
       nameInput.value = '';
       document.getElementById('patientPhone').value = '';
     });
 
     window.addEventListener('message', (e) => {
-      if (e.data && e.data.type === 'THEME_CHANGE') {
+      if (!e.data) return;
+      if (e.data.type === 'THEME_CHANGE') {
         const isLight = e.data.theme === 'light';
         if (isLight) {
           document.body.classList.add('light-theme');
@@ -101,8 +101,13 @@
           document.body.classList.remove('light-theme');
           document.documentElement.classList.remove('light-theme');
         }
+      } else if (e.data.type === 'WAKE_UP') {
+        window.dispatchEvent(new Event('resize'));
+        document.body.style.transform = 'translateZ(0)';
+        setTimeout(() => document.body.style.transform = 'none', 50);
       }
     });
+
     if (window.parent && window.parent.document.body.classList.contains('light-theme')) {
       document.body.classList.add('light-theme');
       document.documentElement.classList.add('light-theme');
