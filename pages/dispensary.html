@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="../styles.css">
+  <style>
+    /* Universal Smooth Transitions */
+    *, html, body, .upload-box, input, button, p, h2, label, svg, div {
+      transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease, stroke 0.4s ease, fill 0.4s ease;
+    }
+
+    /* THE FIX: Enable Native Document Scrolling */
+    html { height: 100%; background: transparent !important; }
+    
+    body { 
+      background: #FFFFFF !important; 
+      background-color: #FFFFFF !important; 
+      color: #1D0A35 !important; 
+      min-height: 100%; 
+      margin: 0; 
+      /* Explicit 4rem safe zone at the bottom */
+      padding: 2.5rem 3rem 4rem 3rem; 
+      box-sizing: border-box; 
+      display: flex;
+      flex-direction: column;
+      /* Removed overflow-y: auto; to force native scroll! */
+    }
+    
+    .disp-title { font-size: 2.4rem; font-weight: 800; letter-spacing: -0.02em; color: #1D0A35 !important; font-family: 'Montserrat', sans-serif; }
+    .disp-desc { color: #3b1856 !important; margin-top: 0.4rem; font-size: 1rem; max-width: 600px; font-weight: 500; }
+    
+    .upload-box { margin-top: 1.5rem; border: 2px dashed rgba(29, 10, 53, 0.35); border-radius: 18px; padding: 2.5rem; text-align: center; background: #FAF6FD !important; cursor: pointer; }
+    .upload-box:hover { border-color: #1D0A35; background: #F3EBF7 !important; }
+    
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1.5rem; max-width: 650px; margin-bottom: 2rem; }
+    input { width: 100%; padding: 0.8rem 1rem; border-radius: 12px; border: 1px solid rgba(29, 10, 53, 0.25); background: #FFFFFF !important; color: #1D0A35 !important; font-size: 0.9rem; font-family: inherit; outline: none; box-sizing: border-box; }
+    input:focus { border-color: #1D0A35; }
+
+    /* Light Theme override */
+    body.light-theme, html.light-theme { background: #1D0A35 !important; background-color: #1D0A35 !important; color: #FFFFFF !important; }
+    body.light-theme .disp-title { color: #FFFFFF !important; }
+    body.light-theme .disp-desc { color: rgba(255, 255, 255, 0.75) !important; }
+    body.light-theme .upload-box { background: rgba(255, 255, 255, 0.08) !important; border-color: rgba(216, 180, 226, 0.35) !important; }
+    body.light-theme .upload-box svg { stroke: #D8B4E2 !important; }
+    body.light-theme .upload-box p { color: #FFFFFF !important; }
+    body.light-theme label { color: #FFFFFF !important; }
+    body.light-theme input { background: rgba(255, 255, 255, 0.1) !important; border-color: rgba(216, 180, 226, 0.3) !important; color: #FFFFFF !important; }
+    body.light-theme .btn-pill { background: #D8B4E2 !important; color: #1D0A35 !important; }
+    
+    .page-footer {
+      margin-top: auto; 
+      padding-top: 1.5rem; 
+      border-top: 1px solid rgba(29, 10, 53, 0.15); 
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center; 
+      font-size: 0.75rem; 
+      color: #4A2B68;
+    }
+    body.light-theme .page-footer { border-top-color: rgba(255, 255, 255, 0.1) !important; color: rgba(255, 255, 255, 0.5) !important; }
+    body.light-theme .page-footer div:last-child { color: #D8B4E2 !important; }
+    
+    @media (max-width: 600px) { body { padding: 1.5rem 1.2rem 3rem 1.2rem; } }
+  </style>
+</head>
+<body>
+
+  <h2 class="disp-title">Send Us Your Prescription</h2>
+  <p class="disp-desc">Take a photo or upload a document of your doctor's prescription. We'll check it, prepare your medicines, and bring them straight to you.</p>
+
+  <div class="upload-box" onclick="document.getElementById('fileUpload').click()">
+    <input type="file" id="fileUpload" style="display: none;" onchange="handleFile(this)" accept="image/*,.pdf" />
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#1D0A35" stroke-width="2" style="margin: 0 auto 0.6rem; display: block;">
+      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+      <polyline points="17 8 12 3 7 8"></polyline>
+      <line x1="12" y1="3" x2="12" y2="15"></line>
+    </svg>
+    <p id="uploadLabel" style="font-weight: 700; font-size: 0.95rem; text-transform: uppercase; letter-spacing: 0.05em; color: inherit;">Click or Drag to Upload Picture / Document</p>
+    <p style="font-size: 0.8rem; margin-top: 0.3rem; color: inherit; opacity: 0.7;">Works with phone photos, PDFs, or scans</p>
+  </div>
+
+  <form class="form-grid" onsubmit="submitForm(event)">
+    <div>
+      <label style="display: block; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; margin-bottom: 0.3rem;">Your Name</label>
+      <input type="text" id="patientName" placeholder="e.g. Mary Johnson" required />
+    </div>
+    <div>
+      <label style="display: block; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; margin-bottom: 0.3rem;">Phone Number</label>
+      <input type="tel" id="patientPhone" placeholder="e.g. 08012345678" required />
+    </div>
+    <div style="grid-column: span 2;">
+      <button type="submit" class="btn-pill" style="background: #1D0A35; color: #FFF; width: 100%; padding: 0.9rem; border: none; cursor: pointer; border-radius: 9999px; font-weight: 700; font-size: 0.85rem; text-transform: uppercase;">Submit Prescription</button>
+    </div>
+  </form>
+
+  <footer class="page-footer">
+    <div>&copy; 2026 OneStop Pharmacy &bull; Licensed Dispensary</div>
+    <div style="font-weight: 700; color: #1D0A35;">Encrypted &amp; HIPAA Compliant</div>
+  </footer>
+
+  <script>
+    function handleFile(input) {
+      if (input.files && input.files[0]) {
+        const label = document.getElementById('uploadLabel');
+        if (label) label.textContent = 'Attached: ' + input.files[0].name;
+      }
+    }
+    function submitForm(e) {
+      e.preventDefault();
+      const nameInput = document.getElementById('patientName');
+      const name = nameInput ? nameInput.value : 'Patient';
+      alert(`Thank you, ${name}! Our pharmacy team has received your prescription.`);
+      e.target.reset();
+      const label = document.getElementById('uploadLabel');
+      if (label) label.textContent = 'Click or Drag to Upload Picture / Document';
+    }
+
+    window.addEventListener('message', (e) => {
+      if (e.data && e.data.type === 'THEME_CHANGE') {
+        const isLight = e.data.theme === 'light';
+        if (isLight) {
+          document.body.classList.add('light-theme');
+          document.documentElement.classList.add('light-theme');
+        } else {
+          document.body.classList.remove('light-theme');
+          document.documentElement.classList.remove('light-theme');
+        }
+      }
+    });
+    
+    if (window.parent && window.parent.document.body.classList.contains('light-theme')) {
+      document.body.classList.add('light-theme');
+      document.documentElement.classList.add('light-theme');
+    }
+  </script>
+</body>
+</html>

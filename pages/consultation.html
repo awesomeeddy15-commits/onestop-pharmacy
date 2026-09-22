@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="../styles.css">
+  <style>
+    /* Universal Smooth Transitions */
+    *, html, body, .card, button, input, p, h2, h3, h4, span, div, svg {
+      transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+    }
+    html, body { background: #D8B4E2 !important; background-color: #D8B4E2 !important; color: #1D0A35 !important; height: 100%; margin: 0; padding: 0; }
+    body { padding: 2.5rem 3rem 4rem 3rem; overflow-y: auto; -webkit-overflow-scrolling: touch; box-sizing: border-box; }
+    .consult-title { font-size: 2.4rem; font-weight: 800; letter-spacing: -0.02em; color: #1D0A35 !important; font-family: 'Montserrat', sans-serif; }
+    .consult-desc { color: #2D144B !important; margin-top: 0.4rem; font-size: 1rem; max-width: 600px; font-weight: 500; }
+    .card { background: #FFFFFF !important; padding: 1.8rem; border-radius: 18px; margin-top: 1.5rem; max-width: 520px; box-shadow: 0 8px 25px rgba(29, 10, 53, 0.08); }
+    
+    /* Light Theme override */
+    body.light-theme, html.light-theme { background: #F3EBF7 !important; background-color: #F3EBF7 !important; }
+
+    .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(17, 5, 31, 0.65); backdrop-filter: blur(6px); align-items: center; justify-content: center; z-index: 999; padding: 1rem; }
+    .modal-box { background: #FFFFFF; padding: 1.8rem; border-radius: 20px; max-width: 400px; width: 100%; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25); }
+    .slot-pill { padding: 0.45rem 0.9rem; border: 1.5px solid #1D0A35; border-radius: 9999px; font-size: 0.78rem; font-weight: 700; cursor: pointer; background: transparent; color: #1D0A35; }
+    .slot-pill.active { background: #1D0A35; color: #FFF; }
+    @media (max-width: 600px) { body { padding: 1.5rem 1.2rem 3rem 1.2rem; } }
+  </style>
+</head>
+<body>
+
+  <h2 class="consult-title">Speak with a Pharmacist</h2>
+  <p class="consult-desc">Have questions about your medicines or dosage? Our friendly pharmacists are here to help you free of charge.</p>
+
+  <div class="card">
+    <h4 style="font-size: 1.2rem; font-weight: 700; color: #1D0A35; font-family: 'Montserrat', sans-serif;">Need Quick Medication Advice?</h4>
+    <p style="font-size: 0.88rem; color: #555; margin-top: 0.4rem; line-height: 1.5;">Book a 10-minute quick chat or call us directly. We will review how to take your medications and answer any questions.</p>
+    <div style="display: flex; gap: 0.8rem; margin-top: 1.2rem; flex-wrap: wrap;">
+      <button id="callBtn" style="background: #1D0A35; color: #FFF; padding: 0.75rem 1.4rem; border: none; cursor: pointer; border-radius: 9999px; font-weight: 700; font-size: 0.75rem; text-transform: uppercase;">Call Now</button>
+      <button id="bookBtn" style="background: transparent; color: #1D0A35; border: 1.5px solid #1D0A35; padding: 0.75rem 1.4rem; cursor: pointer; border-radius: 9999px; font-weight: 700; font-size: 0.75rem; text-transform: uppercase;">Book an Appointment</button>
+    </div>
+  </div>
+
+  <footer style="margin-top: 4rem; padding-top: 1.5rem; border-top: 1px solid rgba(29, 10, 53, 0.15); display: flex; justify-content: space-between; align-items: center; font-size: 0.75rem; color: #4A2B68;">
+    <div>&copy; 2026 OneStop Pharmacy &bull; Clinical Consults</div>
+    <div style="font-weight: 700; color: #1D0A35;">Direct Pharmacist Access</div>
+  </footer>
+
+  <div id="callModal" class="modal-overlay">
+    <div class="modal-box" style="text-align: center;">
+      <h3 style="font-size: 1.2rem; font-weight: 800; color: #1D0A35; font-family: 'Montserrat', sans-serif;">OneStop Pharmacy Desk</h3>
+      <p style="font-size: 0.85rem; color: #666; margin: 0.5rem 0 1.2rem;">Direct phone line to our duty pharmacist.</p>
+      <a href="tel:+2348006637867" style="display: block; width: 100%; text-decoration: none; background: #1D0A35; color: #FFF; padding: 0.85rem; border-radius: 9999px; font-weight: 700; font-size: 0.85rem; text-transform: uppercase;">Dial +234 800 ONESTOP</a>
+      <button id="closeCallBtn" style="background: none; border: none; font-size: 0.75rem; color: #888; cursor: pointer; text-transform: uppercase; font-weight: 700; margin-top: 1rem;">Close</button>
+    </div>
+  </div>
+
+  <div id="bookModal" class="modal-overlay">
+    <div class="modal-box">
+      <h3 style="font-size: 1.2rem; font-weight: 800; color: #1D0A35; font-family: 'Montserrat', sans-serif;">Schedule Consultation</h3>
+      <p style="font-size: 0.82rem; color: #666; margin-top: 0.2rem;">Pick a 15-minute slot today for a private review.</p>
+      <div style="display: flex; gap: 0.4rem; margin: 1rem 0;">
+        <button type="button" class="slot-pill active" onclick="pickSlot(this)">11:30 AM</button>
+        <button type="button" class="slot-pill" onclick="pickSlot(this)">02:00 PM</button>
+        <button type="button" class="slot-pill" onclick="pickSlot(this)">04:15 PM</button>
+      </div>
+      <input type="text" id="patientName" placeholder="Your Full Name" style="width: 100%; padding: 0.7rem 0.9rem; border-radius: 10px; border: 1px solid #ccc; font-size: 0.85rem; margin-bottom: 0.6rem; outline: none; box-sizing: border-box;" />
+      <input type="tel" id="patientPhone" placeholder="Your Phone Number" style="width: 100%; padding: 0.7rem 0.9rem; border-radius: 10px; border: 1px solid #ccc; font-size: 0.85rem; margin-bottom: 1rem; outline: none; box-sizing: border-box;" />
+      <button type="button" id="confirmBookBtn" style="width: 100%; background: #1D0A35; color: #FFF; border: none; padding: 0.85rem; border-radius: 9999px; font-weight: 700; font-size: 0.82rem; text-transform: uppercase; cursor: pointer;">Confirm Free Appointment</button>
+      <div style="text-align: center; margin-top: 0.6rem;">
+        <button id="closeBookBtn" style="background: none; border: none; font-size: 0.75rem; color: #888; cursor: pointer; text-transform: uppercase; font-weight: 700;">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('callBtn').addEventListener('click', () => { document.getElementById('callModal').style.display = 'flex'; });
+    document.getElementById('bookBtn').addEventListener('click', () => { document.getElementById('bookModal').style.display = 'flex'; });
+    document.getElementById('closeCallBtn').addEventListener('click', () => { document.getElementById('callModal').style.display = 'none'; });
+    document.getElementById('closeBookBtn').addEventListener('click', () => { document.getElementById('bookModal').style.display = 'none'; });
+
+    function pickSlot(el) {
+      document.querySelectorAll('.slot-pill').forEach(b => b.classList.remove('active'));
+      el.classList.add('active');
+    }
+
+    document.getElementById('confirmBookBtn').addEventListener('click', () => {
+      const nameInput = document.getElementById('patientName');
+      const name = nameInput.value.trim();
+      if (!name) return alert('Please enter your name.');
+      alert(`Thank you, ${name}! Your consultation has been scheduled.`);
+      document.getElementById('bookModal').style.display = 'none';
+      nameInput.value = '';
+      document.getElementById('patientPhone').value = '';
+    });
+
+    window.addEventListener('message', (e) => {
+      if (e.data && e.data.type === 'THEME_CHANGE') {
+        const isLight = e.data.theme === 'light';
+        if (isLight) {
+          document.body.classList.add('light-theme');
+          document.documentElement.classList.add('light-theme');
+        } else {
+          document.body.classList.remove('light-theme');
+          document.documentElement.classList.remove('light-theme');
+        }
+      }
+    });
+    if (window.parent && window.parent.document.body.classList.contains('light-theme')) {
+      document.body.classList.add('light-theme');
+      document.documentElement.classList.add('light-theme');
+    }
+  </script>
+</body>
+</html>

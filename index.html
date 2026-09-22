@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OneStop Pharmacy | Your health, our utmost priority.</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="main-app">
+
+  <!-- Fixed Top Bar -->
+  <header class="site-header">
+    <div class="logo-wrap" onclick="window.location.hash='home'; location.reload();">
+      <img id="header-logo" src="images/onestop logo light1.png" alt="OneStop Pharmacy" class="brand-logo" onerror="this.style.display='none'; document.getElementById('fallback-logo').style.display='flex';" />
+      <div id="fallback-logo" class="logo-fallback" style="display: none;">
+        <span class="logo-badge">1+</span>
+        <div>
+          <div style="font-weight: 900; letter-spacing: -0.02em; font-size: 1.1rem;">ONESTOP</div>
+          <div style="font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--color-lilac);">Pharmacy</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Header Search Bar -->
+    <div class="header-search-wrap">
+      <form id="header-search-form" class="header-search-box" onsubmit="handleHeaderSearch(event)">
+        <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <input type="text" id="header-search-input" placeholder="Search medicines, vitamins, care..." autocomplete="off" />
+        <button type="submit" class="search-submit-btn">Search</button>
+      </form>
+    </div>
+
+    <div class="nav-actions">
+      <!-- Minimalist Icon Toggle Button -->
+      <button id="menu-toggle-btn" class="btn-icon-toggle" aria-label="Toggle Navigation Stack" title="Toggle Stack">
+        <span class="bar bar-1"></span>
+        <span class="bar bar-2"></span>
+        <span class="bar bar-3"></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Cascading Stack Container -->
+  <main id="deck-container" class="deck-stage">
+
+    <!-- Card 04: Send Prescriptions (Back) -->
+    <section class="page-card" data-index="0" data-page="dispensary">
+      <div class="card-tab-header">
+        <span class="tab-index">PRESCRIPTIONS</span>
+        <span class="tab-title">Upload &amp; Refills</span>
+      </div>
+      <iframe src="pages/dispensary.html" class="card-frame" allowtransparency="true"></iframe>
+    </section>
+
+    <!-- Card 03: Wellness Store -->
+    <section class="page-card" data-index="1" data-page="apothecary">
+      <div class="card-tab-header">
+        <span class="tab-index">WELLNESS STORE</span>
+        <span class="tab-title">Vitamins &amp; Care</span>
+      </div>
+      <iframe src="pages/apothecary.html" class="card-frame" allowtransparency="true"></iframe>
+    </section>
+
+    <!-- Card 02: Pharmacist Consultation -->
+    <section class="page-card" data-index="2" data-page="consultation">
+      <div class="card-tab-header">
+        <span class="tab-index">TALK TO US</span>
+        <span class="tab-title">Free Advice &amp; Consults</span>
+      </div>
+      <iframe src="pages/consultation.html" class="card-frame" allowtransparency="true"></iframe>
+    </section>
+
+    <!-- Card 01: Home / Overview (Foreground) -->
+    <section class="page-card is-selected" data-index="3" data-page="home">
+      <div class="card-tab-header dark">
+        <span class="tab-index">WELCOME</span>
+        <span class="tab-title">Home</span>
+      </div>
+      
+      <!-- Home Content -->
+      <div class="home-content">
+        <div>
+          <div class="motto-tag">Your health, our utmost priority.</div>
+          <h1 class="hero-heading">Your trusted neighborhood pharmacy, right online.</h1>
+          <p class="hero-subtext">Simple medicine delivery, expert pharmacist advice, and daily health essentials delivered safely to your door.</p>
+        </div>
+
+        <div class="hero-actions">
+          <button type="button" id="explore-btn" class="btn-pill btn-primary">Explore All Services &darr;</button>
+        </div>
+
+        <footer style="margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid rgba(255, 255, 255, 0.1); display: flex; justify-content: space-between; align-items: center; font-size: 0.75rem; color: rgba(255, 255, 255, 0.5);">
+          <div>&copy; 2026 OneStop Pharmacy. All rights reserved.</div>
+          <div style="color: var(--color-lilac); font-family: monospace;">Your health, our utmost priority.</div>
+        </footer>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Floating Theme Toggle Button -->
+  <button id="theme-toggle-btn" class="floating-theme-btn" aria-label="Toggle Theme" title="Toggle Light/Dark Mode">
+    <!-- Sun Icon -->
+    <svg id="theme-sun-icon" class="theme-icon sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+    <!-- Moon Icon -->
+    <svg id="theme-moon-icon" class="theme-icon moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;">
+      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+    </svg>
+  </button>
+
+  <script src="main.js"></script>
+</body>
+</html>

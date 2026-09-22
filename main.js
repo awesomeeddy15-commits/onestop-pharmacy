@@ -1,0 +1,151 @@
+document.addEventListener('DOMContentLoaded', () => {
+  const container = document.getElementById('deck-container');
+  const menuBtn = document.getElementById('menu-toggle-btn');
+  const exploreBtn = document.getElementById('explore-btn');
+  const cards = Array.from(document.querySelectorAll('.page-card'));
+  let isDeckOpen = false;
+
+  function openDeck() {
+    isDeckOpen = true;
+    if (menuBtn) menuBtn.classList.add('is-open');
+    if (container) container.classList.add('deck-active');
+  }
+
+  function closeDeck() {
+    isDeckOpen = false;
+    if (menuBtn) menuBtn.classList.remove('is-open');
+    if (container) container.classList.remove('deck-active');
+  }
+
+  function toggleDeck() {
+    if (isDeckOpen) closeDeck();
+    else openDeck();
+  }
+
+  function selectCard(targetCard) {
+    if (!targetCard) return;
+    cards.forEach(card => card.classList.remove('is-selected'));
+    targetCard.classList.add('is-selected');
+    closeDeck();
+    const pageId = targetCard.getAttribute('data-page');
+    if (pageId) window.location.hash = pageId;
+  }
+
+  window.toggleDeck = toggleDeck;
+  window.navigateTo = function (pageName) {
+    const targetCard = document.querySelector(`[data-page="${pageName}"]`);
+    if (targetCard) selectCard(targetCard);
+  };
+
+  if (menuBtn) menuBtn.addEventListener('click', toggleDeck);
+  if (exploreBtn) exploreBtn.addEventListener('click', toggleDeck);
+
+  cards.forEach(card => {
+    card.addEventListener('click', () => {
+      if (isDeckOpen) selectCard(card);
+    });
+    const tabHeader = card.querySelector('.card-tab-header');
+    if (tabHeader) {
+      tabHeader.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (!isDeckOpen) openDeck();
+        else selectCard(card);
+      });
+    }
+  });
+
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') toggleDeck();
+  });
+
+  window.addEventListener('message', (e) => {
+    if (!e.data) return;
+    if (e.data.type === 'NAVIGATE') window.navigateTo(e.data.page);
+    else if (e.data.type === 'OPEN_STACK') openDeck();
+  });
+
+  // --- THEME CONTROLLER ---
+  const themeToggleBtn = document.getElementById('theme-toggle-btn');
+  const headerLogo = document.getElementById('header-logo');
+  const sunIcon = document.getElementById('theme-sun-icon');
+  const moonIcon = document.getElementById('theme-moon-icon');
+
+  function setTheme(theme) {
+    const isLight = (theme === 'light');
+    if (isLight) {
+      document.body.classList.add('light-theme');
+    } else {
+      document.body.classList.remove('light-theme');
+    }
+
+    if (sunIcon) sunIcon.style.display = isLight ? 'none' : 'block';
+    if (moonIcon) moonIcon.style.display = isLight ? 'block' : 'none';
+
+    if (themeToggleBtn) {
+      themeToggleBtn.style.background = isLight ? '#FFFFFF' : '#280E48';
+      themeToggleBtn.style.borderColor = isLight ? '#1D0A35' : '#D8B4E2';
+      themeToggleBtn.style.color = isLight ? '#1D0A35' : '#D8B4E2';
+    }
+
+    if (headerLogo) {
+      headerLogo.src = isLight ? 'images/onestop logo dark1.png' : 'images/onestop logo light1.png';
+    }
+
+    document.querySelectorAll('.card-frame').forEach(frame => {
+      try {
+        if (frame.contentDocument) {
+          if (isLight) {
+            frame.contentDocument.body.classList.add('light-theme');
+            frame.contentDocument.documentElement.classList.add('light-theme');
+          } else {
+            frame.contentDocument.body.classList.remove('light-theme');
+            frame.contentDocument.documentElement.classList.remove('light-theme');
+          }
+        }
+      } catch(err) {} 
+      if (frame.contentWindow) {
+        frame.contentWindow.postMessage({ type: 'THEME_CHANGE', theme: theme }, '*');
+      }
+    });
+
+    localStorage.setItem('onestop_theme', theme);
+  }
+
+  const savedTheme = localStorage.getItem('onestop_theme') || 'dark';
+  setTheme(savedTheme);
+
+  if (themeToggleBtn) {
+    themeToggleBtn.addEventListener('click', () => {
+      const isCurrentlyLight = document.body.classList.contains('light-theme');
+      setTheme(isCurrentlyLight ? 'dark' : 'light');
+    });
+  }
+
+  const initialHash = window.location.hash.replace('#', '');
+  const matchedCard = cards.find(c => c.getAttribute('data-page') === initialHash);
+  if (matchedCard) selectCard(matchedCard);
+  else {
+    const homeCard = document.querySelector('[data-page="home"]');
+    if (homeCard) selectCard(homeCard);
+  }
+});
+
+function handleHeaderSearch(e) {
+  if (e && e.preventDefault) e.preventDefault();
+  const queryInput = document.getElementById('header-search-input');
+  if (!queryInput) return;
+  const query = queryInput.value.trim();
+  if (!query) return;
+
+  if (window.navigateTo) window.navigateTo('apothecary');
+  
+  setTimeout(() => {
+    const apothecaryCard = document.querySelector('[data-page="apothecary"]');
+    if (apothecaryCard) {
+      const iframe = apothecaryCard.querySelector('iframe');
+      if (iframe && iframe.contentWindow) {
+        iframe.contentWindow.postMessage({ type: 'SEARCH', query: query }, '*');
+      }
+    }
+  }, 100);
+}
