@@ -396,3 +396,30 @@ body.main-app.light-theme img[src*="dark.png"] { display: block !important; }
     height: calc(100% - 65px) !important;
   }
 }
+/* =========================================================
+   ULTIMATE GAP & SEARCH ICON FIX
+   ========================================================= */
+/* 1. Force the mobile search icon to be white in dark mode */
+#mobile-search-toggle svg { 
+  stroke: #FFFFFF !important; 
+}
+
+/* Force the mobile search icon to be dark in light mode */
+body.main-app.light-theme #mobile-search-toggle svg { 
+  stroke: #1D0A35 !important; 
+}
+
+/* 2. Annihilate the stubborn gap above the deck on all screen sizes */
+body.main-app .deck {
+  top: 70px !important;
+  height: calc(100% - 70px) !important;
+  margin-top: 0 !important;
+}
+
+/* Tighter gap for mobile specifically */
+@media (max-width: 600px) {
+  body.main-app .deck {
+    top: 64px !important;
+    height: calc(100% - 64px) !important;
+  }
+}
