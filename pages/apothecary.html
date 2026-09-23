@@ -8,8 +8,13 @@
     *, html, body, .item, button, span, h4, p, div, svg {
       transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
     }
-    html, body { background: #F3EBF7 !important; background-color: #F3EBF7 !important; color: #1D0A35 !important; height: 100%; margin: 0; padding: 0; }
-body { padding: 1rem 3rem 4rem 3rem; overflow-y: auto; -webkit-overflow-scrolling: touch; box-sizing: border-box; }    .store-title { font-size: 2.4rem; font-weight: 800; letter-spacing: -0.02em; color: #1D0A35 !important; font-family: 'Montserrat', sans-serif; }
+    
+    /* FIX: Changed height: 100% to min-height: 100% to prevent scroll trapping */
+    html, body { background: #F3EBF7 !important; background-color: #F3EBF7 !important; color: #1D0A35 !important; min-height: 100%; margin: 0; padding: 0; }
+    
+    body { padding: 1rem 3rem 2.5rem 3rem; overflow-y: auto; -webkit-overflow-scrolling: touch; box-sizing: border-box; }    
+    
+    .store-title { font-size: 2.4rem; font-weight: 800; letter-spacing: -0.02em; color: #1D0A35 !important; font-family: 'Montserrat', sans-serif; }
     .store-desc { color: #3b1856 !important; margin-top: 0.4rem; font-size: 1rem; font-weight: 500; }
     .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.2rem; margin-top: 1.5rem; }
     .item { background: #FFFFFF !important; padding: 1.5rem; border-radius: 18px; border: 1px solid rgba(216, 180, 226, 0.4); display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 4px 15px rgba(29, 10, 53, 0.05); }
@@ -17,7 +22,12 @@ body { padding: 1rem 3rem 4rem 3rem; overflow-y: auto; -webkit-overflow-scrollin
     
     /* Light Theme override */
     body.light-theme, html.light-theme { background: #D8B4E2 !important; background-color: #D8B4E2 !important; }
-    @media (max-width: 600px) { body { padding: 1.5rem 1.2rem 3rem 1.2rem; } }
+
+    /* Mobile overrides */
+    @media (max-width: 600px) { 
+      /* Increases bottom padding so the footer clears the floating button and frame edge */
+      body { padding: 1.5rem 1.2rem 2.0rem 1.2rem !important; } 
+    }
   </style>
 </head>
 <body>
@@ -62,9 +72,9 @@ body { padding: 1rem 3rem 4rem 3rem; overflow-y: auto; -webkit-overflow-scrollin
     </div>
   </div>
 
-  <footer style="margin-top: 4rem; padding-top: 1.5rem; border-top: 1px solid rgba(216, 180, 226, 0.5); display: flex; justify-content: space-between; align-items: center; font-size: 0.75rem; color: #4A2B68;">
-    <div>&copy; 2026 OneStop Pharmacy &bull; Curated Wellness</div>
-    <div style="font-weight: 700; color: #1D0A35;">Lab Verified Potency</div>
+  <footer style="margin-top: 4rem; padding-top: 1.5rem; border-top: 1px solid rgba(216, 180, 226, 0.5); display: flex; justify-content: space-between; align-items: flex-start; font-size: 0.75rem; color: #4A2B68; line-height: 1.4;">
+    <div>&copy; 2026 OneStop Pharmacy &bull; Curated<br>Wellness</div>
+    <div style="font-weight: 700; color: #1D0A35; text-align: right;">Lab Verified Potency</div>
   </footer>
 
   <script>
