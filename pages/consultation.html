@@ -9,7 +9,11 @@
       transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
     }
     html, body { background: #D8B4E2 !important; background-color: #D8B4E2 !important; color: #1D0A35 !important; height: 100%; margin: 0; padding: 0; }
-body { padding: 1rem 3rem 4rem 3rem; overflow-y: auto; -webkit-overflow-scrolling: touch; box-sizing: border-box; }    .consult-title { font-size: 2.4rem; font-weight: 800; letter-spacing: -0.02em; color: #1D0A35 !important; font-family: 'Montserrat', sans-serif; }
+    
+    /* Reduced top padding for cleaner desktop look */
+    body { padding: 1rem 3rem 4rem 3rem; overflow-y: auto; -webkit-overflow-scrolling: touch; box-sizing: border-box; }    
+    
+    .consult-title { font-size: 2.4rem; font-weight: 800; letter-spacing: -0.02em; color: #1D0A35 !important; font-family: 'Montserrat', sans-serif; }
     .consult-desc { color: #2D144B !important; margin-top: 0.4rem; font-size: 1rem; max-width: 600px; font-weight: 500; }
     .card { background: #FFFFFF !important; padding: 1.8rem; border-radius: 18px; margin-top: 1.5rem; max-width: 520px; box-shadow: 0 8px 25px rgba(29, 10, 53, 0.08); }
     
@@ -18,7 +22,20 @@ body { padding: 1rem 3rem 4rem 3rem; overflow-y: auto; -webkit-overflow-scrollin
 
     .slot-pill { padding: 0.45rem 0.9rem; border: 1.5px solid #1D0A35; border-radius: 9999px; font-size: 0.78rem; font-weight: 700; cursor: pointer; background: transparent; color: #1D0A35; }
     .slot-pill.active { background: #1D0A35; color: #FFF; }
-    @media (max-width: 600px) { body { padding: 1.5rem 1.2rem 3rem 1.2rem; } }
+
+    /* Mobile overrides */
+    @media (max-width: 600px) { 
+      body { padding: 1.5rem 1.2rem 3rem 1.2rem; } 
+      
+      /* Mobile Footer Fix: Stack text and clear the theme button */
+      footer {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 0.5rem !important;
+        padding-right: 60px !important;
+        text-align: left !important;
+      }
+    }
   </style>
 </head>
 <body>
