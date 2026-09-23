@@ -77,6 +77,7 @@ body.main-app {
 .tab-index { font-family: monospace; font-size: 0.72rem; letter-spacing: 0.12em; font-weight: 700; transition: color 0.4s ease; }
 .tab-title { font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 700; transition: color 0.4s ease; }
 
+
 .deck-stage:not(.deck-active) .page-card { pointer-events: none; opacity: 0; transform: translateY(60px) scale(0.92); }
 .deck-stage:not(.deck-active) .page-card.is-selected { pointer-events: auto !important; opacity: 1 !important; z-index: 50 !important; transform: translateY(0) scale(1) !important; }
 .deck-stage:not(.deck-active) .page-card.is-selected .card-frame { pointer-events: auto !important; }
@@ -363,4 +364,35 @@ body.main-app.light-theme .header-search-box button {
   
   /* Restore original 3D stack spacing */
   .deck { top: 90px !important; height: calc(100% - 90px) !important; }
+}
+/* =========================================================
+   LOGO THEME SWAP
+   ========================================================= */
+body.main-app.light-theme .logo-default { display: none !important; }
+body.main-app.light-theme .logo-alt { display: block !important; }
+
+/* Force desktop stack alignment */
+@media (min-width: 601px) {
+  .deck {
+    top: 68px !important;
+    height: calc(100% - 68px) !important;
+  }
+}
+/* =========================================================
+   FINAL LOGO SWAP & MOBILE GAP FIX
+   ========================================================= */
+/* Default (Dark Mode): Force the white/light logo to show */
+img[src*="dark.png"] { display: none !important; }
+img[src*="light.png"] { display: block !important; }
+
+/* Light Theme: Force the dark logo to show */
+body.main-app.light-theme img[src*="light.png"] { display: none !important; }
+body.main-app.light-theme img[src*="dark.png"] { display: block !important; }
+
+/* Pull the mobile cards up tight against the header */
+@media (max-width: 600px) {
+  .deck {
+    top: 65px !important;
+    height: calc(100% - 65px) !important;
+  }
 }
