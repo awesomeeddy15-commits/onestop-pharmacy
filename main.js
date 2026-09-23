@@ -27,8 +27,19 @@ document.addEventListener('DOMContentLoaded', () => {
     cards.forEach(card => card.classList.remove('is-selected'));
     targetCard.classList.add('is-selected');
     closeDeck();
+    
     const pageId = targetCard.getAttribute('data-page');
     if (pageId) window.location.hash = pageId;
+
+    // WebKit Iframe Scroll-Freeze Fix
+    const iframe = targetCard.querySelector('iframe');
+    if (iframe) {
+      iframe.style.visibility = 'hidden';
+      requestAnimationFrame(() => {
+        iframe.style.visibility = 'visible';
+        if (iframe.contentWindow) iframe.contentWindow.postMessage({ type: 'WAKE_UP' }, '*');
+      });
+    }
   }
 
   window.toggleDeck = toggleDeck;
@@ -63,10 +74,16 @@ document.addEventListener('DOMContentLoaded', () => {
     if (e.data.type === 'NAVIGATE') window.navigateTo(e.data.page);
     else if (e.data.type === 'OPEN_STACK') openDeck();
   });
+  // Make the logo navigate back to home
+  const logoWrap = document.querySelector('.logo-wrap');
+  if (logoWrap) {
+    logoWrap.addEventListener('click', () => {
+      window.navigateTo('home');
+    });
+  }
 
   // --- THEME CONTROLLER ---
   const themeToggleBtn = document.getElementById('theme-toggle-btn');
-  const headerLogo = document.getElementById('header-logo');
   const sunIcon = document.getElementById('theme-sun-icon');
   const moonIcon = document.getElementById('theme-moon-icon');
 
@@ -85,10 +102,6 @@ document.addEventListener('DOMContentLoaded', () => {
       themeToggleBtn.style.background = isLight ? '#FFFFFF' : '#280E48';
       themeToggleBtn.style.borderColor = isLight ? '#1D0A35' : '#D8B4E2';
       themeToggleBtn.style.color = isLight ? '#1D0A35' : '#D8B4E2';
-    }
-
-    if (headerLogo) {
-      headerLogo.src = isLight ? 'images/onestop logo dark1.png' : 'images/onestop logo light1.png';
     }
 
     document.querySelectorAll('.card-frame').forEach(frame => {
@@ -149,29 +162,8 @@ function handleHeaderSearch(e) {
     }
   }, 100);
 }
-// Replace your existing selectCard function with this one:
-  function selectCard(targetCard) {
-    if (!targetCard) return;
-    cards.forEach(card => card.classList.remove('is-selected'));
-    targetCard.classList.add('is-selected');
-    closeDeck();
-    
-    const pageId = targetCard.getAttribute('data-page');
-    if (pageId) window.location.hash = pageId;
 
-    // WebKit Iframe Scroll-Freeze Fix
-    const iframe = targetCard.querySelector('iframe');
-    if (iframe) {
-      iframe.style.visibility = 'hidden';
-      requestAnimationFrame(() => {
-        iframe.style.visibility = 'visible';
-        if (iframe.contentWindow) iframe.contentWindow.postMessage({ type: 'WAKE_UP' }, '*');
-      });
-    }
-  }
-
-
-// --- CART CONTROLLER (Local Storage, Delete & Checkout) ---
+// --- CART CONTROLLER ---
 document.addEventListener('DOMContentLoaded', () => {
   let cart = JSON.parse(localStorage.getItem('onestop_cart')) || [];
   const cartBadge = document.getElementById('cart-badge');
@@ -218,7 +210,6 @@ document.addEventListener('DOMContentLoaded', () => {
         cartItemsContainer.appendChild(row);
       });
 
-      // Bind Delete Buttons
       document.querySelectorAll('.remove-item-btn').forEach(btn => {
         btn.addEventListener('click', (e) => {
           const idx = e.target.getAttribute('data-index');
@@ -251,15 +242,14 @@ document.addEventListener('DOMContentLoaded', () => {
   if (cartWidget) cartWidget.addEventListener('click', () => cartDrawer.classList.add('is-open'));
   if (closeCartBtn) closeCartBtn.addEventListener('click', () => cartDrawer.classList.remove('is-open'));
 
-  // Checkout Logic
   if (checkoutBtn) {
     checkoutBtn.addEventListener('click', () => {
-      if (cart.length === 0) return; // Do nothing if empty
-      cart = []; // Clear Cart
+      if (cart.length === 0) return; 
+      cart = []; 
       localStorage.setItem('onestop_cart', JSON.stringify(cart));
       renderCart();
-      cartDrawer.classList.remove('is-open'); // Close Drawer
-      checkoutModal.classList.add('show'); // Pop Success Modal
+      cartDrawer.classList.remove('is-open'); 
+      checkoutModal.classList.add('show'); 
     });
   }
 
@@ -267,6 +257,7 @@ document.addEventListener('DOMContentLoaded', () => {
     closeCheckoutModal.addEventListener('click', () => checkoutModal.classList.remove('show'));
   }
 });
+
 // --- MOBILE SEARCH PANEL LOGIC ---
 document.addEventListener('DOMContentLoaded', () => {
   const mobileSearchToggle = document.getElementById('mobile-search-toggle');
@@ -282,7 +273,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Hook up the mobile input to filter the iframes
   if (mobileSearchInput) {
     mobileSearchInput.addEventListener('input', (e) => {
       const query = e.target.value.toLowerCase();

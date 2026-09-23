@@ -12,10 +12,8 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 body { font-family: 'Inter', sans-serif; }
-
 h1, h2, h3, h4, .font-heading { font-family: 'Montserrat', sans-serif; }
 
-/* ISOLATES BACKGROUND TO MAIN WINDOW ONLY */
 body.main-app {
   background-color: var(--color-dark);
   color: var(--color-white);
@@ -25,10 +23,10 @@ body.main-app {
 }
 
 /* =========================================================
-   TRUE FROSTED GLASS HEADER
+   HEADER & NAVIGATION
    ========================================================= */
 .site-header {
-  position: fixed; top: 0; left: 0; right: 0; height: 75px; z-index: 100;
+  position: fixed; top: 0; left: 0; right: 0; height: 75px; z-index: 1000;
   display: flex; align-items: center; justify-content: space-between; padding: 0 1.5rem;
   background: rgba(29, 10, 53, 0.55);
   -webkit-backdrop-filter: blur(20px) saturate(180%);
@@ -41,20 +39,27 @@ body.main-app {
 
 .logo-wrap { display: flex; align-items: center; gap: 0.5rem; cursor: pointer; flex-shrink: 0; }
 .brand-logo { height: 38px; width: auto; object-fit: contain; }
-.logo-fallback { display: flex; align-items: center; gap: 0.5rem; }
-.logo-badge { width: 32px; height: 32px; border-radius: 50%; background: var(--color-lilac); color: var(--color-purple); display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.8rem; }
 
-/* Responsive Search Bar */
+/* CSS Logo Swapping based on Theme */
+body.main-app .logo-default { display: block; }
+body.main-app .logo-alt { display: none; }
+body.main-app.light-theme .logo-default { display: none; }
+body.main-app.light-theme .logo-alt { display: block; }
+
+/* Desktop Search Bar */
 .header-search-wrap { flex: 1; max-width: 440px; min-width: 130px; margin: 0 0.5rem; }
 .header-search-box { display: flex; align-items: center; background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(216, 180, 226, 0.3); border-radius: 9999px; padding: 0.25rem 0.35rem 0.25rem 0.75rem; transition: all 0.3s ease; }
 .header-search-box:focus-within { background: rgba(255, 255, 255, 0.18); border-color: var(--color-lilac); box-shadow: 0 0 16px rgba(216, 180, 226, 0.35); }
 .search-icon { width: 15px; height: 15px; stroke: var(--color-lilac); opacity: 0.9; flex-shrink: 0; margin-right: 0.4rem; transition: stroke 0.4s ease; }
 .header-search-box input { flex: 1; width: 100%; background: transparent; border: none; outline: none; color: var(--color-white); font-family: 'Inter', sans-serif; font-size: 0.82rem; min-width: 40px; transition: color 0.4s ease; }
 .header-search-box input::placeholder { color: rgba(216, 180, 226, 0.6); font-size: 0.78rem; transition: color 0.4s ease; }
-.search-submit-btn { background: var(--color-lilac); color: var(--color-purple); border: none; border-radius: 9999px; padding: 0.38rem 0.85rem; font-family: 'Montserrat', sans-serif; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; cursor: pointer; flex-shrink: 0; transition: all 0.2s ease; }
-.search-submit-btn:hover { background: var(--color-white); }
 
-/* Nav Actions */
+/* Desktop Search Button Styled */
+.header-search-box button { background: var(--color-purple); color: var(--color-white); border: none; padding: 0.45rem 1.2rem; border-radius: 9999px; font-weight: 700; font-size: 0.7rem; font-family: 'Montserrat', sans-serif; letter-spacing: 0.05em; cursor: pointer; margin-left: 0.5rem; transition: all 0.3s ease; text-transform: uppercase; }
+.header-search-box button:hover { opacity: 0.8; }
+body.main-app.light-theme .header-search-box button { background: var(--color-lilac); color: var(--color-purple); }
+
+/* Nav Actions & Buttons */
 .nav-actions { display: flex; align-items: center; flex-shrink: 0; }
 .btn-icon-toggle { width: 42px; height: 42px; border-radius: 50%; border: 1px solid rgba(216, 180, 226, 0.3); background: rgba(216, 180, 226, 0.1); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; cursor: pointer; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); padding: 0; }
 .btn-icon-toggle:hover { background: var(--color-lilac); border-color: var(--color-lilac); box-shadow: 0 0 14px rgba(216, 180, 226, 0.25); }
@@ -66,17 +71,24 @@ body.main-app {
 .btn-icon-toggle.is-open .bar-2 { opacity: 0; transform: scaleX(0); }
 .btn-icon-toggle.is-open .bar-3 { transform: translateY(-6px) rotate(-45deg); }
 
+/* Slide-Down Mobile Search Panel */
+.mobile-only { display: none !important; }
+.mobile-search-panel { position: absolute; top: 100%; left: 0; width: 100%; padding: 1rem 1.2rem; background: rgba(17, 5, 31, 0.95); -webkit-backdrop-filter: blur(25px); backdrop-filter: blur(25px); border-bottom: 1px solid rgba(216, 180, 226, 0.2); transform: translateY(-100%); opacity: 0; pointer-events: none; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); z-index: -1; box-sizing: border-box; }
+.mobile-search-panel.is-open { transform: translateY(0); opacity: 1; pointer-events: auto; }
+body.main-app.light-theme .mobile-search-panel { background: rgba(247, 243, 250, 0.95); border-bottom-color: rgba(29, 10, 53, 0.15); }
+#mobile-search-toggle svg { stroke: var(--color-white); }
+body.main-app.light-theme #mobile-search-toggle svg { stroke: var(--color-purple); }
+
 /* =========================================================
-   STAGE & CARDS: POSITIONED WITH SAFE CLEARANCE UNDER HEADER
+   STAGE & CARDS (The Gap Fix is applied via padding-top here)
    ========================================================= */
-.deck-stage { position: relative; width: 100vw; height: 100vh; padding-top: 95px; padding-bottom: 25px; padding-left: 1rem; padding-right: 1rem; display: flex; justify-content: center; align-items: flex-start; perspective: 1800px; box-sizing: border-box; }
+.deck-stage { position: relative; width: 100vw; height: 100vh; padding-top: 80px; padding-bottom: 25px; padding-left: 1rem; padding-right: 1rem; display: flex; justify-content: center; align-items: flex-start; perspective: 1800px; box-sizing: border-box; }
 .page-card { position: absolute; width: 94%; max-width: 1080px; height: calc(100vh - 130px); border-radius: 24px; box-shadow: 0 20px 45px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.1); overflow: hidden; transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease, box-shadow 0.6s ease, background-color 0.4s ease, border-color 0.4s ease; transform-origin: center top; }
 .card-frame { width: 100%; height: calc(100% - 50px); border: none; background: transparent; display: block; transition: background-color 0.4s ease; }
 .card-tab-header { height: 50px; padding: 0 1.5rem; display: flex; align-items: center; justify-content: space-between; cursor: pointer; border-bottom: 1px solid rgba(0, 0, 0, 0.08); transition: border-color 0.4s ease; }
 .card-tab-header.dark { border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
 .tab-index { font-family: monospace; font-size: 0.72rem; letter-spacing: 0.12em; font-weight: 700; transition: color 0.4s ease; }
 .tab-title { font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 700; transition: color 0.4s ease; }
-
 
 .deck-stage:not(.deck-active) .page-card { pointer-events: none; opacity: 0; transform: translateY(60px) scale(0.92); }
 .deck-stage:not(.deck-active) .page-card.is-selected { pointer-events: auto !important; opacity: 1 !important; z-index: 50 !important; transform: translateY(0) scale(1) !important; }
@@ -90,6 +102,7 @@ body.main-app {
 .deck-stage.deck-active .page-card[data-index="3"] { z-index: 40; transform: translateY(180px) translateZ(0px) scale(0.98); }
 .deck-stage.deck-active .page-card:hover { filter: brightness(1.06); }
 
+/* Home Content */
 .home-content { padding: 3rem 2.5rem; display: flex; flex-direction: column; justify-content: space-between; height: calc(100% - 50px); overflow-y: auto; }
 .motto-tag { display: inline-block; padding: 0.4rem 1rem; border-radius: 9999px; background: rgba(216, 180, 226, 0.12); border: 1px solid rgba(216, 180, 226, 0.3); font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: var(--color-lilac); margin-bottom: 1.5rem; transition: background-color 0.4s ease, border-color 0.4s ease, color 0.4s ease; }
 .hero-heading { font-size: clamp(2rem, 4.2vw, 3.8rem); font-weight: 900; line-height: 1.1; letter-spacing: -0.02em; max-width: 850px; transition: color 0.4s ease; }
@@ -104,14 +117,6 @@ body.main-app {
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: rgba(216, 180, 226, 0.3); border-radius: 9999px; }
 ::-webkit-scrollbar-thumb:hover { background: rgba(216, 180, 226, 0.6); }
-
-@media (max-width: 600px) {
-  .site-header { padding: 0 0.75rem; }
-  .header-search-wrap { margin: 0 0.35rem; }
-  .header-search-box input::placeholder { font-size: 0.7rem; }
-  .search-submit-btn { padding: 0.35rem 0.6rem; font-size: 0.62rem; }
-  .home-content { padding: 1.5rem; }
-}
 
 /* =========================================================
    DARK THEME (DEFAULT) CARD COLORS
@@ -133,14 +138,7 @@ body:not(.light-theme) .page-card[data-page="dispensary"] .tab-index { color: #1
 body:not(.light-theme) .page-card[data-page="dispensary"] .tab-title { color: rgba(29, 10, 53, 0.6) !important; }
 
 /* =========================================================
-   FLOATING THEME TOGGLE BUTTON
-   ========================================================= */
-.floating-theme-btn { position: fixed; bottom: 24px; right: 24px; width: 48px; height: 48px; border-radius: 50%; background: #280E48; border: 1.5px solid #D8B4E2; color: #D8B4E2; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 9999; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4); transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
-.floating-theme-btn:hover { transform: scale(1.08); }
-.floating-theme-btn .theme-icon { width: 20px; height: 20px; transition: opacity 0.4s ease; }
-
-/* =========================================================
-   LIGHT THEME (REVERSED CARD COLORS)
+   LIGHT THEME OVERRIDES
    ========================================================= */
 body.main-app.light-theme { background-color: #F7F3FA !important; color: #1D0A35 !important; }
 body.main-app.light-theme .site-header { background: rgba(255, 255, 255, 0.75) !important; border-bottom: 1px solid rgba(29, 10, 53, 0.12) !important; box-shadow: 0 8px 30px rgba(29, 10, 53, 0.06) !important; }
@@ -151,7 +149,7 @@ body.main-app.light-theme .search-icon { stroke: #1D0A35 !important; }
 body.main-app.light-theme .btn-icon-toggle { background: rgba(29, 10, 53, 0.06) !important; border-color: rgba(29, 10, 53, 0.2) !important; }
 body.main-app.light-theme .btn-icon-toggle .bar { background-color: #1D0A35 !important; }
 
-/* Card 01: Home -> Pure White */
+/* Card Colors - Light Theme */
 body.light-theme .page-card[data-page="home"] { background-color: #FFFFFF !important; color: #1D0A35 !important; border: 1px solid rgba(29, 10, 53, 0.12) !important; box-shadow: 0 20px 45px rgba(29, 10, 53, 0.08) !important; }
 body.light-theme .page-card[data-page="home"] .card-tab-header { border-bottom: 1px solid rgba(29, 10, 53, 0.08) !important; }
 body.light-theme .page-card[data-page="home"] .tab-index { color: #1D0A35 !important; }
@@ -162,81 +160,62 @@ body.light-theme .page-card[data-page="home"] .motto-tag { background: rgba(216,
 body.light-theme .page-card[data-page="home"] footer { border-top-color: rgba(29, 10, 53, 0.1) !important; color: rgba(29, 10, 53, 0.5) !important; }
 body.light-theme .page-card[data-page="home"] footer div:last-child { color: #1D0A35 !important; }
 
-/* Card 02: Consultation -> Pale Lilac */
 body.light-theme .page-card[data-page="consultation"] { background-color: #F3EBF7 !important; color: #1D0A35 !important; border: 1px solid rgba(216, 180, 226, 0.5) !important; }
 body.light-theme .page-card[data-page="consultation"] .card-tab-header { border-bottom: 1px solid rgba(29, 10, 53, 0.1) !important; }
 body.light-theme .page-card[data-page="consultation"] .tab-index { color: #1D0A35 !important; }
 body.light-theme .page-card[data-page="consultation"] .tab-title { color: rgba(29, 10, 53, 0.7) !important; }
 
-/* Card 03: Apothecary -> Soft Lilac */
 body.light-theme .page-card[data-page="apothecary"] { background-color: #D8B4E2 !important; color: #1D0A35 !important; border: 1px solid rgba(255, 255, 255, 0.5) !important; }
 body.light-theme .page-card[data-page="apothecary"] .card-tab-header { border-bottom: 1px solid rgba(29, 10, 53, 0.15) !important; }
 body.light-theme .page-card[data-page="apothecary"] .tab-index { color: #1D0A35 !important; }
 body.light-theme .page-card[data-page="apothecary"] .tab-title { color: rgba(29, 10, 53, 0.7) !important; }
 
-/* Card 04: Dispensary -> Deep Royal Purple */
 body.light-theme .page-card[data-page="dispensary"] { background-color: #1D0A35 !important; color: #FFFFFF !important; border: 1px solid rgba(216, 180, 226, 0.3) !important; }
 body.light-theme .page-card[data-page="dispensary"] .card-tab-header { border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important; }
 body.light-theme .page-card[data-page="dispensary"] .tab-index { color: #D8B4E2 !important; }
 body.light-theme .page-card[data-page="dispensary"] .tab-title { color: rgba(255, 255, 255, 0.65) !important; }
+
 /* =========================================================
-   CART WIDGET STYLING
+   FLOATING THEME TOGGLE BUTTON
+   ========================================================= */
+.floating-theme-btn { position: fixed; bottom: 24px; right: 24px; width: 48px; height: 48px; border-radius: 50%; background: #280E48; border: 1.5px solid #D8B4E2; color: #D8B4E2; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 9999; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4); transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
+.floating-theme-btn:hover { transform: scale(1.08); }
+.floating-theme-btn .theme-icon { width: 20px; height: 20px; transition: opacity 0.4s ease; }
+
+/* =========================================================
+   CART DRAWER & WIDGET
    ========================================================= */
 .cart-widget { position: relative; display: flex; align-items: center; justify-content: center; width: 42px; height: 42px; border-radius: 50%; background: rgba(216, 180, 226, 0.1); border: 1px solid rgba(216, 180, 226, 0.3); margin-right: 0.75rem; cursor: pointer; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
 .cart-widget:hover { background: var(--color-lilac); border-color: var(--color-lilac); box-shadow: 0 0 14px rgba(216, 180, 226, 0.25); }
 .cart-widget svg { width: 18px; height: 18px; stroke: var(--color-white); transition: stroke 0.4s ease; }
 .cart-widget:hover svg { stroke: var(--color-purple); }
-
 .cart-badge { position: absolute; top: -4px; right: -4px; background: #EF4444; color: #FFF; font-size: 0.65rem; font-weight: 800; font-family: monospace; width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 5px rgba(0,0,0,0.2); transition: transform 0.2s ease; }
 .cart-badge.pop { transform: scale(1.3); }
 
-/* Light Theme overrides for cart */
 body.main-app.light-theme .cart-widget { background: rgba(29, 10, 53, 0.06); border-color: rgba(29, 10, 53, 0.2); }
 body.main-app.light-theme .cart-widget svg { stroke: #1D0A35; }
-/* =========================================================
-   CART DRAWER
-   ========================================================= */
-.cart-drawer {
-  position: fixed; top: 0; right: -100%; width: 100%; max-width: 400px; 
-  /* THE FIX: Fallback to 100%, but use 100dvh for mobile address bars */
-  height: 100%; 
-  height: 100dvh; 
-  box-sizing: border-box; 
-  background: rgba(17, 5, 31, 0.85);
-  -webkit-backdrop-filter: blur(25px) saturate(200%);
-  backdrop-filter: blur(25px) saturate(200%);
-  z-index: 99999; display: flex; flex-direction: column;
-  border-left: 1px solid rgba(216, 180, 226, 0.2);
-  box-shadow: -10px 0 40px rgba(0, 0, 0, 0.5);
-  transition: right 0.5s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.4s ease;
-}
-.cart-drawer.is-open { right: 0; }
 
+.cart-drawer { position: fixed; top: 0; right: -100%; width: 100%; max-width: 400px; height: 100%; height: 100dvh; box-sizing: border-box; background: rgba(17, 5, 31, 0.85); -webkit-backdrop-filter: blur(25px) saturate(200%); backdrop-filter: blur(25px) saturate(200%); z-index: 99999; display: flex; flex-direction: column; border-left: 1px solid rgba(216, 180, 226, 0.2); box-shadow: -10px 0 40px rgba(0, 0, 0, 0.5); transition: right 0.5s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.4s ease; }
+.cart-drawer.is-open { right: 0; }
 .cart-drawer-header { padding: 1.5rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(216, 180, 226, 0.15); }
 .close-cart-btn { background: none; border: none; color: var(--color-white); font-size: 2rem; line-height: 1; cursor: pointer; transition: color 0.2s ease; }
 .close-cart-btn:hover { color: var(--color-lilac); }
-
 .cart-items-container { flex: 1; overflow-y: auto; padding: 1.5rem; display: flex; flex-direction: column; gap: 1rem; }
 .cart-item-row { display: flex; justify-content: space-between; align-items: center; background: rgba(255, 255, 255, 0.05); padding: 1rem; border-radius: 12px; border: 1px solid rgba(216, 180, 226, 0.1); }
 .cart-item-info h5 { font-size: 0.85rem; font-weight: 700; margin-bottom: 0.2rem; }
 .cart-item-info p { font-size: 0.75rem; color: rgba(255, 255, 255, 0.6); }
-
 .cart-drawer-footer { padding: 1.5rem; border-top: 1px solid rgba(216, 180, 226, 0.15); background: rgba(0, 0, 0, 0.2); }
 .cart-total-row { display: flex; justify-content: space-between; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 0.05em; }
 
-/* Light Theme overrides */
 body.main-app.light-theme .cart-drawer { background: rgba(247, 243, 250, 0.85); border-left-color: rgba(29, 10, 53, 0.15); box-shadow: -10px 0 40px rgba(29, 10, 53, 0.1); }
 body.main-app.light-theme .close-cart-btn { color: var(--color-purple); }
 body.main-app.light-theme .cart-item-row { background: #FFFFFF; border-color: rgba(29, 10, 53, 0.1); }
 body.main-app.light-theme .cart-item-info p { color: rgba(29, 10, 53, 0.6); }
 body.main-app.light-theme .cart-drawer-footer { background: rgba(255, 255, 255, 0.5); border-top-color: rgba(29, 10, 53, 0.15); }
 
-/* =========================================================
-   CART DELETE BTN & GLOBAL MODALS
-   ========================================================= */
+/* Modals & Delete Button */
 .remove-item-btn { background: none; border: none; color: #EF4444; font-size: 1.4rem; cursor: pointer; line-height: 1; padding-left: 0.8rem; transition: transform 0.2s ease; }
 .remove-item-btn:hover { transform: scale(1.2); }
-
 .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(17, 5, 31, 0.75); backdrop-filter: blur(8px); align-items: center; justify-content: center; z-index: 999999; padding: 1rem; opacity: 0; transition: opacity 0.3s ease; }
 .modal-overlay.show { display: flex; opacity: 1; }
 .modal-box { background: #FFFFFF; padding: 2rem; border-radius: 20px; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35); transform: translateY(20px); transition: transform 0.3s ease; }
@@ -244,182 +223,21 @@ body.main-app.light-theme .cart-drawer-footer { background: rgba(255, 255, 255, 
 body.main-app.light-theme .modal-box { background: #F3EBF7; }
 
 /* =========================================================
-   MOBILE HEADER FIX (Full-Width Search & Prominent Logo)
+   MOBILE RESPONSIVENESS & GAP FIXES
    ========================================================= */
 @media (max-width: 600px) {
-  .site-header { 
-    padding: 1rem 1.2rem 1rem 1.2rem !important; 
-    flex-wrap: wrap !important; 
-    height: auto !important; 
-  }
-  
-  /* Row 1: Make logo significantly larger to balance the buttons */
-  .brand-logo { 
-    height: 42px !important; 
-    margin-right: auto; 
-  }
-  
-  .nav-actions { 
-    margin-left: auto; 
-    display: flex; 
-    align-items: center; 
-  }
-  
-  /* Row 2: Force the search pill to stretch edge-to-edge */
-  .header-search-wrap { 
-    order: 3 !important; 
-    width: 100% !important; 
-    max-width: 100% !important;
-    flex: 0 0 100% !important;
-    margin: 1.2rem 0 0.2rem 0 !important; 
-    display: flex !important;
-    box-sizing: border-box !important;
-  }
-  
-  /* Ensure the text box stretches to fill the extra space inside the pill */
-  .header-search-box {
-    flex: 1 !important;
-    width: 100% !important;
-  }
-  
-  .header-search-wrap input, 
-  .header-search-wrap button { 
-    display: block !important; 
-  }
-
-  /* Match button sizes to the new larger logo */
-  .cart-widget { width: 42px; height: 42px; margin-right: 0.5rem; }
-  .btn-icon-toggle { width: 42px; height: 42px; }
-}
-/* =========================================================
-   MOBILE HEADER: Slide-Down Search Panel & Layout
-   ========================================================= */
-.mobile-only { display: none !important; }
-
-.mobile-search-panel { 
-  position: absolute; top: 100%; left: 0; width: 100%; padding: 1rem 1.2rem; 
-  background: rgba(17, 5, 31, 0.95); 
-  -webkit-backdrop-filter: blur(25px); backdrop-filter: blur(25px); 
-  border-bottom: 1px solid rgba(216, 180, 226, 0.2);
-  transform: translateY(-100%); opacity: 0; pointer-events: none;
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  z-index: -1; 
-  box-sizing: border-box;
-}
-.site-header { position: relative; z-index: 1000; }
-.mobile-search-panel.is-open { transform: translateY(0); opacity: 1; pointer-events: auto; }
-
-/* Light Theme overrides for the panel */
-body.main-app.light-theme .mobile-search-panel { background: rgba(247, 243, 250, 0.95); border-bottom-color: rgba(29, 10, 53, 0.15); }
-
-/* =========================================================
-   DESKTOP FIXES: Deck Alignment & Search Button Styling
-   ========================================================= */
-/* 1. Pull the 3D stack back up on Desktop */
-.deck {
-  top: 80px !important;
-  height: calc(100% - 80px) !important;
-}
-
-/* 2. Style the raw SEARCH button into a premium pill */
-.header-search-box button {
-  background: #1D0A35;
-  color: #FFFFFF;
-  border: none;
-  padding: 0.45rem 1.2rem;
-  border-radius: 9999px;
-  font-weight: 700;
-  font-size: 0.7rem;
-  letter-spacing: 0.05em;
-  cursor: pointer;
-  margin-left: 0.5rem;
-  transition: all 0.3s ease;
-}
-
-.header-search-box button:hover {
-  opacity: 0.8;
-}
-
-/* Light Theme override for the search button */
-body.main-app.light-theme .header-search-box button {
-  background: #D8B4E2;
-  color: #1D0A35;
-}
-
-@media (max-width: 600px) {
-  /* Restore 1-Row Layout */
+  /* Clean 1-Row Header */
   .site-header { padding: 0.8rem 1rem !important; flex-wrap: nowrap !important; height: auto !important; }
-  
   .brand-logo { height: 44px !important; margin-right: auto; }
-  
-  /* Hide Desktop Search completely */
   .header-search-wrap { display: none !important; }
-  
-  /* Show Mobile Search Toggle */
   .mobile-only { display: flex !important; }
   
-  /* Compact Button Row */
+  /* Compact Buttons */
   .nav-actions { gap: 0.4rem; display: flex; align-items: center; }
   .cart-widget, .btn-icon-toggle { width: 38px; height: 38px; margin: 0; }
   
-  /* Restore original 3D stack spacing */
-  .deck { top: 90px !important; height: calc(100% - 90px) !important; }
-}
-/* =========================================================
-   LOGO THEME SWAP
-   ========================================================= */
-body.main-app.light-theme .logo-default { display: none !important; }
-body.main-app.light-theme .logo-alt { display: block !important; }
-
-/* Force desktop stack alignment */
-@media (min-width: 601px) {
-  .deck {
-    top: 68px !important;
-    height: calc(100% - 68px) !important;
-  }
-}
-/* =========================================================
-   FINAL LOGO SWAP & MOBILE GAP FIX
-   ========================================================= */
-/* Default (Dark Mode): Force the white/light logo to show */
-img[src*="dark.png"] { display: none !important; }
-img[src*="light.png"] { display: block !important; }
-
-/* Light Theme: Force the dark logo to show */
-body.main-app.light-theme img[src*="light.png"] { display: none !important; }
-body.main-app.light-theme img[src*="dark.png"] { display: block !important; }
-
-/* Pull the mobile cards up tight against the header */
-@media (max-width: 600px) {
-  .deck {
-    top: 65px !important;
-    height: calc(100% - 65px) !important;
-  }
-}
-/* =========================================================
-   ULTIMATE GAP & SEARCH ICON FIX
-   ========================================================= */
-/* 1. Force the mobile search icon to be white in dark mode */
-#mobile-search-toggle svg { 
-  stroke: #FFFFFF !important; 
-}
-
-/* Force the mobile search icon to be dark in light mode */
-body.main-app.light-theme #mobile-search-toggle svg { 
-  stroke: #1D0A35 !important; 
-}
-
-/* 2. Annihilate the stubborn gap above the deck on all screen sizes */
-body.main-app .deck {
-  top: 70px !important;
-  height: calc(100% - 70px) !important;
-  margin-top: 0 !important;
-}
-
-/* Tighter gap for mobile specifically */
-@media (max-width: 600px) {
-  body.main-app .deck {
-    top: 64px !important;
-    height: calc(100% - 64px) !important;
-  }
+  /* Pull mobile cards tight under the header */
+  .deck-stage { padding-top: 75px !important; }
+  
+  .home-content { padding: 1.5rem; }
 }
