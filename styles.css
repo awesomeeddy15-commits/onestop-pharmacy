@@ -241,3 +241,73 @@ body.main-app.light-theme .modal-box { background: #F3EBF7; }
   
   .home-content { padding: 1.5rem; }
 }
+
+/* ==========================================
+   GLOBAL SEARCH OVERLAY
+   ========================================== */
+.search-overlay {
+  position: absolute;
+  top: 80px; /* Sits just below the header */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  max-width: 600px;
+  background: #FFFFFF;
+  border-radius: 18px;
+  box-shadow: 0 15px 40px rgba(29, 10, 53, 0.15);
+  border: 1px solid rgba(216, 180, 226, 0.4);
+  z-index: 9999;
+  max-height: 450px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Dark theme overrides if your main app uses it */
+body:not(.light-theme) .search-overlay {
+  background: #1D0A35;
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+}
+
+.search-overlay-header {
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid rgba(216, 180, 226, 0.3);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.search-results-list {
+  padding: 0.5rem;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.search-result-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  border-radius: 12px;
+  transition: background-color 0.2s ease;
+}
+
+.search-result-item:hover {
+  background-color: rgba(216, 180, 226, 0.15);
+}
+
+body:not(.light-theme) .search-result-item:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.search-result-info h4 { margin: 0.2rem 0; font-size: 1rem; font-weight: 800; }
+.search-result-info p { margin: 0; font-size: 0.8rem; color: #666; }
+.search-result-action { display: flex; align-items: center; gap: 1rem; }
+
+/* Push search overlay down on mobile to clear the expanded search bar */
+@media (max-width: 600px) {
+  .search-overlay {
+    top: 135px; /* Adjust slightly if you need a bit more or less clearance */
+  }
+}

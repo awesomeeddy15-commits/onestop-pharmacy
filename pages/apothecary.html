@@ -34,43 +34,89 @@
   <h2 class="store-title">Everyday Health & Care</h2>
   <p class="store-desc">Daily vitamins, gentle skincare, and immune boosters you can count on.</p>
 
-  <div class="grid" id="productGrid">
-    <div class="item" data-name="hydrating barrier cream skincare">
-      <div>
-        <span style="font-size: 0.7rem; font-weight: 700; color: #777; text-transform: uppercase;">Skincare</span>
-        <h4 style="margin-top: 0.3rem; font-size: 1.1rem; font-weight: 800; color: #1D0A35;">Hydrating Barrier Cream</h4>
-        <p style="font-size: 0.85rem; margin-top: 0.3rem; color: #555;">Moisturizes and calms dry, sensitive skin.</p>
+  <div class="store-grid">
+      
+      <!-- ITEM 1 -->
+      <div class="item" data-name="hydrating barrier cream" style="display: flex; flex-direction: row; gap: 1rem; align-items: center; text-align: left;">
+        <div style="width: 90px; height: 90px; flex-shrink: 0; border-radius: 12px; overflow: hidden; background: rgba(216, 180, 226, 0.2);">
+          <img src="https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&w=200&q=80" alt="Cream" style="width: 100%; height: 100%; object-fit: cover;">
+        </div>
+        <div style="flex: 1; display: flex; flex-direction: column; justify-content: center;">
+          <div class="cat" style="font-size: 0.65rem; font-weight: 700; color: #777; text-transform: uppercase;">SKINCARE</div>
+          <h4 style="margin: 0.3rem 0; font-size: 1rem;">Hydrating Barrier Cream</h4>
+          <p style="margin: 0; font-size: 0.8rem; opacity: 0.7;">Moisturizes and calms dry, sensitive skin.</p>
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 0.8rem;">
+            <div class="price" style="font-weight: 800;">$24.00</div>
+            <button class="btn-pill btn-primary" onclick="addToCart('hydrating-barrier-cream', 'Hydrating Barrier Cream', 24.00, this)">ADD TO BAG</button>
+          </div>
+        </div>
       </div>
-      <div class="price-row">
-        <span style="font-weight: 800; font-size: 1rem; color: #1D0A35;">$24.00</span>
-        <button onclick="addToBag(this)" style="background: #1D0A35; color: #FFF; padding: 0.45rem 1.1rem; border: none; cursor: pointer; border-radius: 9999px; font-weight: 700; font-size: 0.7rem; text-transform: uppercase;">Add to Bag</button>
-      </div>
-    </div>
 
-    <div class="item" data-name="daily vitamin c zinc immunity">
-      <div>
-        <span style="font-size: 0.7rem; font-weight: 700; color: #777; text-transform: uppercase;">Immunity</span>
-        <h4 style="margin-top: 0.3rem; font-size: 1.1rem; font-weight: 800; color: #1D0A35;">Daily Vitamin C & Zinc</h4>
-        <p style="font-size: 0.85rem; margin-top: 0.3rem; color: #555;">High absorption everyday immunity support.</p>
+      <!-- ITEM 2 -->
+      <div class="item" data-name="daily vitamin c & zinc" style="display: flex; flex-direction: row; gap: 1rem; align-items: center; text-align: left;">
+        <div style="width: 90px; height: 90px; flex-shrink: 0; border-radius: 12px; overflow: hidden; background: rgba(216, 180, 226, 0.2);">
+          <img src="https://naturesfieldng.com/wp-content/uploads/2026/06/Vitamin-C-500mg-Plus-Zinc-15mg-e1780665689160.png" alt="Vitamins" style="width: 100%; height: 100%; object-fit: cover;">
+        </div>
+        <div style="flex: 1; display: flex; flex-direction: column; justify-content: center;">
+          <div class="cat" style="font-size: 0.65rem; font-weight: 700; color: #777; text-transform: uppercase;">IMMUNITY</div>
+          <h4 style="margin: 0.3rem 0; font-size: 1rem;">Daily Vitamin C & Zinc</h4>
+          <p style="margin: 0; font-size: 0.8rem; opacity: 0.7;">High absorption everyday immunity support.</p>
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 0.8rem;">
+            <div class="price" style="font-weight: 800;">$18.00</div>
+            <button class="btn-pill btn-primary" onclick="addToCart('daily-vitamin-c-zinc', 'Daily Vitamin C & Zinc', 18.00, this)">ADD TO BAG</button>
+          </div>
+        </div>
       </div>
-      <div class="price-row">
-        <span style="font-weight: 800; font-size: 1rem; color: #1D0A35;">$18.00</span>
-        <button onclick="addToBag(this)" style="background: #1D0A35; color: #FFF; padding: 0.45rem 1.1rem; border: none; cursor: pointer; border-radius: 9999px; font-weight: 700; font-size: 0.7rem; text-transform: uppercase;">Add to Bag</button>
-      </div>
-    </div>
 
-    <div class="item" data-name="night sleep support rest recovery">
-      <div>
-        <span style="font-size: 0.7rem; font-weight: 700; color: #777; text-transform: uppercase;">Sleep & Rest</span>
-        <h4 style="margin-top: 0.3rem; font-size: 1.1rem; font-weight: 800; color: #1D0A35;">Night Sleep Support</h4>
-        <p style="font-size: 0.85rem; margin-top: 0.3rem; color: #555;">Natural herbal formula for peaceful sleep.</p>
+      <!-- ITEM 3 -->
+      <div class="item" data-name="night sleep support" style="display: flex; flex-direction: row; gap: 1rem; align-items: center; text-align: left;">
+        <div style="width: 90px; height: 90px; flex-shrink: 0; border-radius: 12px; overflow: hidden; background: rgba(216, 180, 226, 0.2);">
+          <img src="https://naturesfieldng.com/wp-content/uploads/2024/03/Naturesfield-CalmNite_5.webp" alt="Sleep" style="width: 100%; height: 100%; object-fit: cover;">
+        </div>
+        <div style="flex: 1; display: flex; flex-direction: column; justify-content: center;">
+          <div class="cat" style="font-size: 0.65rem; font-weight: 700; color: #777; text-transform: uppercase;">SLEEP & REST</div>
+          <h4 style="margin: 0.3rem 0; font-size: 1rem;">Night Sleep Support</h4>
+          <p style="margin: 0; font-size: 0.8rem; opacity: 0.7;">Natural herbal formula for peaceful sleep.</p>
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 0.8rem;">
+            <div class="price" style="font-weight: 800;">$22.00</div>
+            <button class="btn-pill btn-primary" onclick="addToCart('night-sleep-support', 'Night Sleep Support', 22.00, this)">ADD TO BAG</button>
+          </div>
+        </div>
       </div>
-      <div class="price-row">
-        <span style="font-weight: 800; font-size: 1rem; color: #1D0A35;">$22.00</span>
-        <button onclick="addToBag(this)" style="background: #1D0A35; color: #FFF; padding: 0.45rem 1.1rem; border: none; cursor: pointer; border-radius: 9999px; font-weight: 700; font-size: 0.7rem; text-transform: uppercase;">Add to Bag</button>
+
+      <!-- ITEM 4 -->
+      <div class="item" data-name="omega 3 fish oil" style="display: flex; flex-direction: row; gap: 1rem; align-items: center; text-align: left;">
+        <div style="width: 90px; height: 90px; flex-shrink: 0; border-radius: 12px; overflow: hidden; background: rgba(216, 180, 226, 0.2);">
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-fH1Ol3tRSnUnsEAoDfu8LqM_Alk7zMCeNHx3mkDu7Qm3FfjejgZ8k8w&s=10" alt="Omega 3" style="width: 100%; height: 100%; object-fit: cover;">
+        </div>
+        <div style="flex: 1; display: flex; flex-direction: column; justify-content: center;">
+          <div class="cat" style="font-size: 0.65rem; font-weight: 700; color: #777; text-transform: uppercase;">HEART HEALTH</div>
+          <h4 style="margin: 0.3rem 0; font-size: 1rem;">Omega-3 Fish Oil</h4>
+          <p style="margin: 0; font-size: 0.8rem; opacity: 0.7;">Triple strength EPA/DHA for brain and heart.</p>
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 0.8rem;">
+            <div class="price" style="font-weight: 800;">$28.00</div>
+            <button class="btn-pill btn-primary" onclick="addToCart('omega-3-fish-oil', 'Omega-3 Fish Oil', 28.00, this)">ADD TO BAG</button>
+          </div>
+        </div>
       </div>
+
+      <!-- ITEM 5 -->
+      <div class="item" data-name="digestive enzymes" style="display: flex; flex-direction: row; gap: 1rem; align-items: center; text-align: left;">
+        <div style="width: 90px; height: 90px; flex-shrink: 0; border-radius: 12px; overflow: hidden; background: rgba(216, 180, 226, 0.2);">
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRlVYNkg7Gza08MoiGEszAhJF51HR8ylpMytlBtkZ4PoWQmIPhCIDVUJWo&s=10" alt="Enzymes" style="width: 100%; height: 100%; object-fit: cover;">
+        </div>
+        <div style="flex: 1; display: flex; flex-direction: column; justify-content: center;">
+          <div class="cat" style="font-size: 0.65rem; font-weight: 700; color: #777; text-transform: uppercase;">GUT HEALTH</div>
+          <h4 style="margin: 0.3rem 0; font-size: 1rem;">Digestive Enzymes</h4>
+          <p style="margin: 0; font-size: 0.8rem; opacity: 0.7;">Breaks down complex foods to ease bloating.</p>
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 0.8rem;">
+            <div class="price" style="font-weight: 800;">$26.00</div>
+            <button class="btn-pill btn-primary" onclick="addToCart('digestive-enzymes', 'Digestive Enzymes', 26.00, this)">ADD TO BAG</button>
+          </div>
+        </div>
+      </div>
+
     </div>
-  </div>
 
   <footer style="margin-top: 4rem; padding-top: 1.5rem; border-top: 1px solid rgba(216, 180, 226, 0.5); display: flex; justify-content: space-between; align-items: flex-start; font-size: 0.75rem; color: #4A2B68; line-height: 1.4;">
     <div>&copy; 2026 OneStop Pharmacy &bull; Curated<br>Wellness</div>
@@ -114,24 +160,51 @@
           item.style.display = text.includes(q) ? 'flex' : 'none';
         });
       } else if (e.data.type === 'THEME_CHANGE') {
-        const isLight = e.data.theme === 'light';
-        if (isLight) {
-          document.body.classList.add('light-theme');
-          document.documentElement.classList.add('light-theme');
-        } else {
-          document.body.classList.remove('light-theme');
-          document.documentElement.classList.remove('light-theme');
-        }
+        // ... (your existing theme logic) ...
       } else if (e.data.type === 'WAKE_UP') {
-        window.dispatchEvent(new Event('resize'));
-        document.body.style.transform = 'translateZ(0)';
-        setTimeout(() => document.body.style.transform = 'none', 50);
+        // ... (your existing wake-up logic) ...
+        
+      // --- NEW LOGIC: Smooth Scroll and Highlight ---
+      } else if (e.data.type === 'SCROLL_TO_ITEM') {
+        // Find the product by checking the h4 text
+        const headers = Array.from(document.querySelectorAll('.item h4'));
+        const targetHeader = headers.find(h4 => h4.textContent.trim() === e.data.itemName);
+        
+        if (targetHeader) {
+          const itemCard = targetHeader.closest('.item');
+          
+          // Scroll the item to the center of the screen
+          itemCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          
+          // Flash a border highlight so the user knows exactly which one it is
+          const originalBorder = itemCard.style.borderColor;
+          const originalShadow = itemCard.style.boxShadow;
+          
+          itemCard.style.borderColor = '#1D0A35';
+          itemCard.style.boxShadow = '0 8px 25px rgba(29, 10, 53, 0.15)';
+          
+          setTimeout(() => {
+            itemCard.style.borderColor = originalBorder;
+            itemCard.style.boxShadow = originalShadow;
+          }, 1500);
+        }
       }
     });
+    function addToCart(id, name, price, btnEl) {
+      // 1. Send the item up to the main app's cart listener
+      window.parent.postMessage({ 
+        type: 'ADD_TO_CART', 
+        item: { id, name, price } 
+      }, '*');
 
-    if (window.parent && window.parent.document.body.classList.contains('light-theme')) {
-      document.body.classList.add('light-theme');
-      document.documentElement.classList.add('light-theme');
+      // 2. Give the user some quick visual feedback
+      const originalText = btnEl.innerText;
+      btnEl.innerText = '✓ ADDED';
+      
+      // 3. Reset the button after a second
+      setTimeout(() => {
+        btnEl.innerText = originalText;
+      }, 1500);
     }
   </script>
 </body>
