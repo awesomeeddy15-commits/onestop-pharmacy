@@ -120,6 +120,11 @@
       document.body.classList.add('light-theme');
       document.documentElement.classList.add('light-theme');
     }
+
+    // Tell the parent window to close the search overlay if clicked anywhere in this page
+    document.addEventListener('click', () => {
+      window.parent.postMessage({ type: 'CLOSE_SEARCH' }, '*');
+    });
   </script>
 </body>
 </html>

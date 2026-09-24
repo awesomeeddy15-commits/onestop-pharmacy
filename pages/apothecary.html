@@ -34,7 +34,7 @@
   <h2 class="store-title">Everyday Health & Care</h2>
   <p class="store-desc">Daily vitamins, gentle skincare, and immune boosters you can count on.</p>
 
-  <div class="store-grid">
+  <div class="store-grid" style="margin-top: 2rem;">
       
       <!-- ITEM 1 -->
       <div class="item" data-name="hydrating barrier cream" style="display: flex; flex-direction: row; gap: 1rem; align-items: center; text-align: left;">
@@ -46,8 +46,8 @@
           <h4 style="margin: 0.3rem 0; font-size: 1rem;">Hydrating Barrier Cream</h4>
           <p style="margin: 0; font-size: 0.8rem; opacity: 0.7;">Moisturizes and calms dry, sensitive skin.</p>
           <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 0.8rem;">
-            <div class="price" style="font-weight: 800;">$24.00</div>
-            <button class="btn-pill btn-primary" onclick="addToCart('hydrating-barrier-cream', 'Hydrating Barrier Cream', 24.00, this)">ADD TO BAG</button>
+            <div class="price" style="font-weight: 800;">₦4,600.00</div>
+            <button class="btn-pill btn-primary" onclick="addToCart('hydrating-barrier-cream', 'Hydrating Barrier Cream', 4600.00, this)">ADD TO BAG</button>
           </div>
         </div>
       </div>
@@ -62,8 +62,8 @@
           <h4 style="margin: 0.3rem 0; font-size: 1rem;">Daily Vitamin C & Zinc</h4>
           <p style="margin: 0; font-size: 0.8rem; opacity: 0.7;">High absorption everyday immunity support.</p>
           <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 0.8rem;">
-            <div class="price" style="font-weight: 800;">$18.00</div>
-            <button class="btn-pill btn-primary" onclick="addToCart('daily-vitamin-c-zinc', 'Daily Vitamin C & Zinc', 18.00, this)">ADD TO BAG</button>
+            <div class="price" style="font-weight: 800;">₦18,000.00</div>
+            <button class="btn-pill btn-primary" onclick="addToCart('daily-vitamin-c-zinc', 'Daily Vitamin C & Zinc', 18000.00, this)">ADD TO BAG</button>
           </div>
         </div>
       </div>
@@ -78,8 +78,8 @@
           <h4 style="margin: 0.3rem 0; font-size: 1rem;">Night Sleep Support</h4>
           <p style="margin: 0; font-size: 0.8rem; opacity: 0.7;">Natural herbal formula for peaceful sleep.</p>
           <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 0.8rem;">
-            <div class="price" style="font-weight: 800;">$22.00</div>
-            <button class="btn-pill btn-primary" onclick="addToCart('night-sleep-support', 'Night Sleep Support', 22.00, this)">ADD TO BAG</button>
+            <div class="price" style="font-weight: 800;">₦22,450.00</div>
+            <button class="btn-pill btn-primary" onclick="addToCart('night-sleep-support', 'Night Sleep Support', 22450.00, this)">ADD TO BAG</button>
           </div>
         </div>
       </div>
@@ -94,8 +94,8 @@
           <h4 style="margin: 0.3rem 0; font-size: 1rem;">Omega-3 Fish Oil</h4>
           <p style="margin: 0; font-size: 0.8rem; opacity: 0.7;">Triple strength EPA/DHA for brain and heart.</p>
           <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 0.8rem;">
-            <div class="price" style="font-weight: 800;">$28.00</div>
-            <button class="btn-pill btn-primary" onclick="addToCart('omega-3-fish-oil', 'Omega-3 Fish Oil', 28.00, this)">ADD TO BAG</button>
+            <div class="price" style="font-weight: 800;">₦28,200.00</div>
+            <button class="btn-pill btn-primary" onclick="addToCart('omega-3-fish-oil', 'Omega-3 Fish Oil', 28200.00, this)">ADD TO BAG</button>
           </div>
         </div>
       </div>
@@ -110,8 +110,8 @@
           <h4 style="margin: 0.3rem 0; font-size: 1rem;">Digestive Enzymes</h4>
           <p style="margin: 0; font-size: 0.8rem; opacity: 0.7;">Breaks down complex foods to ease bloating.</p>
           <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 0.8rem;">
-            <div class="price" style="font-weight: 800;">$26.00</div>
-            <button class="btn-pill btn-primary" onclick="addToCart('digestive-enzymes', 'Digestive Enzymes', 26.00, this)">ADD TO BAG</button>
+            <div class="price" style="font-weight: 800;">₦26,000.00</div>
+            <button class="btn-pill btn-primary" onclick="addToCart('digestive-enzymes', 'Digestive Enzymes', 26000.00, this)">ADD TO BAG</button>
           </div>
         </div>
       </div>
@@ -206,6 +206,11 @@
         btnEl.innerText = originalText;
       }, 1500);
     }
+
+    // Tell the parent window to close the search overlay if clicked anywhere in this page
+    document.addEventListener('click', () => {
+      window.parent.postMessage({ type: 'CLOSE_SEARCH' }, '*');
+    });
   </script>
 </body>
 </html>

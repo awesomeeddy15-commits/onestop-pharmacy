@@ -197,10 +197,17 @@ document.addEventListener('DOMContentLoaded', () => {
       cart.forEach((item, index) => {
         const row = document.createElement('div');
         row.className = 'cart-item-row';
+        
+        // This formats the individual item price with commas and 2 decimal places
+        const formattedPrice = (item.price * item.quantity).toLocaleString('en-NG', {
+          minimumFractionDigits: 2, 
+          maximumFractionDigits: 2
+        });
+
         row.innerHTML = `
           <div class="cart-item-info">
             <h5>${item.name}</h5>
-            <p>$${(item.price * item.quantity).toFixed(2)}</p>
+            <p>₦${formattedPrice}</p>
           </div>
           <div style="display: flex; align-items: center;">
             <div style="display: flex; align-items: center; gap: 0.5rem; background: rgba(216, 180, 226, 0.3); border-radius: 999px; padding: 2px 8px;">
@@ -221,7 +228,7 @@ document.addEventListener('DOMContentLoaded', () => {
           if (cart[idx].quantity > 1) {
             cart[idx].quantity -= 1;
           } else {
-            cart.splice(idx, 1); // Delete if they minus past 1
+            cart.splice(idx, 1);
           }
           localStorage.setItem('onestop_cart', JSON.stringify(cart));
           renderCart();
@@ -247,7 +254,13 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
     
-    if (cartTotalPrice) cartTotalPrice.textContent = `$${totalValue.toFixed(2)}`;
+    // This formats the grand total at the bottom of the cart
+    if (cartTotalPrice) {
+      cartTotalPrice.textContent = `₦${totalValue.toLocaleString('en-NG', {
+        minimumFractionDigits: 2, 
+        maximumFractionDigits: 2
+      })}`;
+    }
   }
 
   renderCart();
@@ -318,11 +331,11 @@ document.addEventListener('DOMContentLoaded', () => {
 // ==========================================
 
 const searchIndex = [
-  { type: 'product', id: "hydrating-barrier-cream", category: "Skincare", name: "Hydrating Barrier Cream", desc: "Moisturizes and calms dry, sensitive skin.", price: 24.00 },
-  { type: 'product', id: "daily-vitamin-c-zinc", category: "Immunity", name: "Daily Vitamin C & Zinc", desc: "High absorption everyday immunity support.", price: 18.00 },
-  { type: 'product', id: "night-sleep-support", category: "Sleep & Rest", name: "Night Sleep Support", desc: "Natural herbal formula for peaceful sleep.", price: 22.00 },
-  { type: 'product', id: "omega-3-fish-oil", category: "Heart Health", name: "Omega-3 Fish Oil", desc: "Triple strength EPA/DHA for brain and heart.", price: 28.00 },
-  { type: 'product', id: "digestive-enzymes", category: "Gut Health", name: "Digestive Enzymes", desc: "Breaks down complex foods to ease bloating.", price: 26.00 },
+  { type: 'product', id: "hydrating-barrier-cream", category: "Skincare", name: "Hydrating Barrier Cream", desc: "Moisturizes and calms dry, sensitive skin.", price: 4600 },
+  { type: 'product', id: "daily-vitamin-c-zinc", category: "Immunity", name: "Daily Vitamin C & Zinc", desc: "High absorption everyday immunity support.", price: 18000 },
+  { type: 'product', id: "night-sleep-support", category: "Sleep & Rest", name: "Night Sleep Support", desc: "Natural herbal formula for peaceful sleep.", price: 22000 },
+  { type: 'product', id: "omega-3-fish-oil", category: "Heart Health", name: "Omega-3 Fish Oil", desc: "Triple strength EPA/DHA for brain and heart.", price: 28200 },
+  { type: 'product', id: "digestive-enzymes", category: "Gut Health", name: "Digestive Enzymes", desc: "Breaks down complex foods to ease bloating.", price: 26000 },
   { type: 'page', id: "consult-pharmacist", category: "Service", name: "Talk to a Pharmacist", desc: "Free medication advice and clinical consults.", target: "consultation" },
   { type: 'page', id: "upload-prescription", category: "Service", name: "Upload a Prescription", desc: "Send photos or documents for easy refills.", target: "dispensary" }
 ];
@@ -389,7 +402,7 @@ function handleLiveSearch(query) {
               <p style="margin: 0; font-size: 0.8rem; color: #666;">${item.desc}</p>
             </div>
             <div class="search-result-action">
-              <span style="font-weight: 800; font-size: 1rem;">$${item.price.toFixed(2)}</span>
+              <span style="font-weight: 800; font-size: 1rem;">₦${item.price.toLocaleString('en-NG', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</span>
               <button class="btn-pill btn-primary" style="padding: 0.4rem 0.9rem; font-size: 0.7rem; border-radius: 999px;" 
                       onclick="event.stopPropagation(); addFromSearch('${item.id}', '${item.name}', ${item.price}, this)">
                 ADD
@@ -467,6 +480,13 @@ document.addEventListener('click', (e) => {
       !e.target.closest('.header-search-wrap') && 
       !e.target.closest('.mobile-search-panel') && 
       !e.target.closest('#mobile-search-toggle')) {
+    closeSearchUI();
+  }
+});
+
+// Listens for click events inside the iframes to close the search UI
+window.addEventListener('message', (e) => {
+  if (e.data && e.data.type === 'CLOSE_SEARCH') {
     closeSearchUI();
   }
 });
